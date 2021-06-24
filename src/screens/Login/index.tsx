@@ -5,9 +5,12 @@ import TitleForm from '../../components/TittleForm'
 import Form from '../../components/Form'
 
 const Container = styled.View`
-  background-color: #F7F7F7;
+  background-color: #f7f7f7;
   width: 100%;
   height: 100%;
+  margin: 0 auto;
+  padding: 0 8%;
+  justify-content: space-around;
 `
 
 const LogoTGL = styled.View`

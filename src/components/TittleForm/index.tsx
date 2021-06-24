@@ -7,7 +7,7 @@ const Title = styled.Text`
   font-style: italic;
   font-weight: 700;
   
-  margin: 46px auto 26px;
+  margin: 16px auto;
 `
 
 interface ITitleFormProps {
