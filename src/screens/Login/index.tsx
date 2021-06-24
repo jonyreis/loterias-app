@@ -1,7 +1,6 @@
 import React from 'react'
 import styled from 'styled-components/native'
 
-import TitleForm from '../../components/TittleForm'
 import Form from '../../components/Form'
 
 const Container = styled.View`
@@ -33,6 +32,12 @@ const LineTitle = styled.View`
   height: 7px;
 `
 
+const Footer = styled.Text`
+  color: #707070;
+  font-size: 16px;
+  text-align: center;
+`
+
 const Login = () => {
   return (
     <Container>
@@ -41,6 +46,7 @@ const Login = () => {
         <LineTitle></LineTitle>
       </LogoTGL>
       <Form />
+      <Footer>Copyright 2020 Luby Software</Footer>
     </Container>
   )
 }
