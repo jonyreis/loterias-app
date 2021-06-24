@@ -40,7 +40,7 @@ const Login = () => {
         <Title>TGL</Title>
         <LineTitle></LineTitle>
       </LogoTGL>
-      <TitleForm title="Authentication"/>
+      <Form />
     </Container>
   )
 }
