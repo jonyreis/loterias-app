@@ -1,7 +1,9 @@
 import React from 'react'
+import { View } from 'react-native'
 import styled from 'styled-components/native'
 
 import Form from '../../components/Form'
+import ButtonRedirect from '../../components/ButtonRedirect'
 
 const Container = styled.View`
   background-color: #f7f7f7;
@@ -38,14 +40,20 @@ const Footer = styled.Text`
   text-align: center;
 `
 
-const Login = () => {
+const Login = ({ navigation }: any) => {
   return (
     <Container>
       <LogoTGL >
         <Title>TGL</Title>
         <LineTitle></LineTitle>
       </LogoTGL>
-      <Form />
+      <View>
+        <Form 
+          navigation={navigation}
+          titleForm="Authentication"
+        />
+        <ButtonRedirect navigation={navigation} to="SignUp" nameButton="SignUp" />
+      </View>
       <Footer>Copyright 2020 Luby Software</Footer>
     </Container>
   )
