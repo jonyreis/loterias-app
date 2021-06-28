@@ -1,6 +1,7 @@
 import React from 'react'
 import { useNavigation } from '@react-navigation/native'
 import { Form } from '@unform/mobile'
+import * as Yup from 'yup'
 import { Platform, KeyboardAvoidingView } from 'react-native'
 import styled from 'styled-components/native'
 
@@ -26,31 +27,59 @@ const TextForgetPassword = styled.Text`
   font-style: italic;
 `
 
-const URL = "http://127.0.0.1:3333"
-
 const FormComponent = ({ titleForm }: any) => {
   const navigation = useNavigation()
   const formRef = React.useRef<any>(null)
 
-  async function handleSubmit(data: any, { reset }: any) {
+  async function handleSubmit(data: { name: string; email: string; password: string }, { reset }: any) {
     const user = {
       username: data.name,
       email: data.email,
       password: data.password,
     }
-  
-    await api.post('/register', user)
-      .then(() => {
-        alert('Usuário cadastrado com sucesso!')
-        navigation.navigate('Login')
-      })
-      .catch((error) => {
-        alert('E-mail ou Nome já cadastrado!')
-        alert(error.message)
-        console.log(error)
-        return
-      })
+
+    const schema = Yup.object().shape({
+      email: Yup.string().email().required(),
+    })
+
+    await schema.validate({ email: data.email }, {
+      abortEarly: false,
+    }).then(() => {
+      handleRequest(titleForm, user)
+    })
+    .catch((err) => {
+      alert(`${err.errors}`)
+      err.errors
+    })
+    
     reset()
+  }
+
+  async function handleRequest(request: string, user: { username?: string; email: string; password: string }) {
+    switch (request) {
+      case "Registration":
+        await api.post('/register', user)
+        .then(() => {
+          alert('Usuário cadastrado com sucesso!')
+          navigation.navigate('Login')
+        })
+        .catch((error) => {
+          alert(error.message)
+        })
+        break;
+    
+      case "Authentication":
+        await api.post('/sessions', { email: user.email, password: user.password })
+        .then(() => {
+          alert('Login feito com sucesso!')
+        })
+        .catch((error) => {
+          alert(error.message)
+        })
+        break;
+      default:
+        break;
+    }
   }
 
   return (
@@ -62,18 +91,13 @@ const FormComponent = ({ titleForm }: any) => {
             <Input
               name="name" 
               label="Nome" 
-              autoCorrect={false}
-              autoCapitalize="none"
             />
           }
           <Input
             name="email" 
             label="Email" 
-            autoCorrect={false}
-            autoCapitalize="none"
-            keyboardType="email-address"
           />
-          <Input name="password" label="Password" secureTextEntry={true} />
+          <Input name="password" label="Password" />
           {titleForm === "Authentication" &&
             <LinkForgetPassword onPress={() => navigation.navigate("ForgotPassword")} >
               <TextForgetPassword>I forget my password</TextForgetPassword>

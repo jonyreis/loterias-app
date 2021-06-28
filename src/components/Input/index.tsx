@@ -16,47 +16,64 @@ const TextInput = styled.TextInput`
 interface IInputProps {
   name: string
   label?: string
-  autoCorrect?: boolean
-  autoCapitalize?: string
-  keyboardType?: string
-  secureTextEntry?: boolean
 }
 
 
-const Input = ({ name, label, secureTextEntry }: IInputProps) => {
+const Input = ({ name, label, ...rest }: IInputProps) => {
   const [value, onChangeText] = React.useState('')
 
-  const inputRef = useRef(null)
+  const inputRef: React.Ref<any> = useRef(null)
   
   const { fieldName, defaultValue, registerField, error } = useField(name)
 
   useEffect(() => {
+    inputRef.current.value = defaultValue
+  }, [defaultValue])
+  useEffect(() => {
+    if (inputRef.current) inputRef.current.value = defaultValue
+  }, [defaultValue])
+  useEffect(() => {
     registerField({
       name: fieldName,
-      ref: inputRef,
-      getValue: ref => {
-        return ref.current.value
+      ref: inputRef.current,
+      getValue() {
+        if (inputRef.current) return inputRef.current.value
+        return ''
       },
-      setValue: (ref, value) => {
-        ref.current.value = value
+      setValue(ref, value) {
+        if (inputRef.current) {
+          inputRef.current.setNativeProps({ text: value })
+          inputRef.current.value = value
+        }
       },
-      clearValue: ref => {
-        ref.current.value = ''
+      clearValue() {
+        if (inputRef.current) {
+          inputRef.current.setNativeProps({ text: '' })
+          inputRef.current.value = ''
+        }
       },
-    })
+    });
   }, [fieldName, registerField])
-  
+
+  const handleChangeText = React.useCallback(
+    text => {
+      if (inputRef.current) inputRef.current.value = text
+      if (onChangeText) onChangeText(text)
+    },
+    [onChangeText],
+  )
+
   return (
-    <TextInput 
+    <TextInput
       ref={inputRef}
       defaultValue={defaultValue}
-
+      onChangeText={handleChangeText}
       placeholder={label}     
+      {...rest}
+
       style={{borderBottomColor: '#ddd', borderBottomWidth: 2}}
-      secureTextEntry={secureTextEntry}
-      autoCapitalize="none"
-      autoCorrect={false}
-    />
+      secureTextEntry={name === "password" ? true : false}
+      />
   );
 }
 
