@@ -23,16 +23,39 @@ interface IInputProps {
 }
 
 
-const Input = ({ name, label, secureTextEntry, ...rest }: IInputProps) => {
+const Input = ({ name, label, secureTextEntry }: IInputProps) => {
   const [value, onChangeText] = React.useState('')
 
+  const inputRef = useRef(null)
+  
+  const { fieldName, defaultValue, registerField, error } = useField(name)
+
+  useEffect(() => {
+    registerField({
+      name: fieldName,
+      ref: inputRef,
+      getValue: ref => {
+        return ref.current.value
+      },
+      setValue: (ref, value) => {
+        ref.current.value = value
+      },
+      clearValue: ref => {
+        ref.current.value = ''
+      },
+    })
+  }, [fieldName, registerField])
+  
   return (
     <TextInput 
-      onChangeText={text => onChangeText(text)}
-      value={value}
+      ref={inputRef}
+      defaultValue={defaultValue}
+
       placeholder={label}     
       style={{borderBottomColor: '#ddd', borderBottomWidth: 2}}
       secureTextEntry={secureTextEntry}
+      autoCapitalize="none"
+      autoCorrect={false}
     />
   );
 }
