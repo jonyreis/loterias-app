@@ -3,6 +3,8 @@ import { useNavigation } from '@react-navigation/native'
 import { Form } from '@unform/mobile'
 import * as Yup from 'yup'
 import { Platform, KeyboardAvoidingView } from 'react-native'
+import { useDispatch } from 'react-redux'
+
 import styled from 'styled-components/native'
 
 import api from '../../services/api'
@@ -29,6 +31,7 @@ const TextForgetPassword = styled.Text`
 
 const FormComponent = ({ titleForm }: any) => {
   const navigation = useNavigation()
+  const dispatch = useDispatch()
   const formRef = React.useRef<any>(null)
 
   async function handleSubmit(data: { name: string; email: string; password: string }, { reset }: any) {
@@ -70,8 +73,14 @@ const FormComponent = ({ titleForm }: any) => {
     
       case "Authentication":
         await api.post('/sessions', { email: user.email, password: user.password })
-        .then(() => {
+        .then((response) => {
           alert('Login feito com sucesso!')
+          if (response.status === 200) {
+            dispatch({
+              type: 'USER_AUTH',
+              payload: response.data
+            })
+          }
         })
         .catch((error) => {
           alert(error.message)
