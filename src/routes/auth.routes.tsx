@@ -6,6 +6,7 @@ import { Feather } from '@expo/vector-icons'
 import Home from '../screens/Home'
 import NewBet from '../screens/NewBet'
 import Account from '../screens/Account'
+import ButtonNewBet from '../components/ButtonNewBet'
 
 const Tab = createBottomTabNavigator()
 
@@ -20,19 +21,16 @@ const AuthRoutes = () => {
         tabBarIcon: ({ color, size}) => {
           switch (route.name) {
             case 'Home':
-              setIconName('home')
-              break;
+              return <Feather name="home" size={size} color={color} />
 
+            case 'NewBet':
+              return <ButtonNewBet />
             case 'Account':
-              setIconName('home')
-              break;
+              return <Feather name="user" size={size} color={color} />
 
             default:
-              setIconName('circle')
-              break;
+              return <Feather name="circle" size={size} color={color} />
           }
-
-            return <Feather name="home" size={size} color={color} />
           }
         })}
         tabBarOptions={{
