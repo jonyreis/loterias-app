@@ -74,7 +74,6 @@ const FormComponent = ({ titleForm }: any) => {
       case "Authentication":
         await api.post('/sessions', { email: user.email, password: user.password })
         .then((response) => {
-          alert('Login feito com sucesso!')
           if (response.status === 200) {
             dispatch({
               type: 'USER_AUTH',
