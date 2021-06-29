@@ -7,14 +7,14 @@ import Home from '../screens/Home'
 import NewBet from '../screens/NewBet'
 import Account from '../screens/Account'
 import ButtonNewBet from '../components/ButtonNewBet'
+import Header from '../components/Header';
 
 const Tab = createBottomTabNavigator()
 
 const AuthRoutes = () => {
-  const [iconName, setIconName] = React.useState<string>('home')
-  
   return (
     <NavigationContainer>
+      <Header />
       <Tab.Navigator 
       
       screenOptions={({ route }) => ({
@@ -22,7 +22,7 @@ const AuthRoutes = () => {
           switch (route.name) {
             case 'Home':
               return <Feather name="home" size={size} color={color} />
-
+            
             case 'NewBet':
               return <ButtonNewBet />
             case 'Account':
@@ -31,7 +31,7 @@ const AuthRoutes = () => {
             default:
               return <Feather name="circle" size={size} color={color} />
           }
-          }
+        }
         })}
         tabBarOptions={{
           activeTintColor: '#000',
