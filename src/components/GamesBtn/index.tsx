@@ -1,17 +1,27 @@
 import React from 'react'
 import { useSelector, RootStateOrAny } from 'react-redux'
+import styled from 'styled-components/native'
 
 import MyCheckbox from './MyCheckbox'
 
 
 
+const CheckboxContent = styled.View`
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-between;
+
+  width: 100%;
+  margin: 15px auto 0;
+`
+
+
 const GamesBtn = () => {
-  const [checked, onChange] = React.useState<boolean>(false)
   const { games } = useSelector((state: RootStateOrAny) => state)
 
   return (
-    <>
-      {games && games.map((item: {
+    <CheckboxContent>
+      {games.map((item: {
         id: number,
         type: string,
         color: string,
@@ -22,12 +32,12 @@ const GamesBtn = () => {
         range: number
       }) =>
         <MyCheckbox
-          checked={checked}
-          onChange={onChange}
+          key={item.id}
           title={item.type}  
+          color={item.color}
         />
       )}
-    </>
+    </CheckboxContent>
   )
 }
 

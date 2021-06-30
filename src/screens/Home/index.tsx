@@ -8,18 +8,28 @@ import api from '../../services/api'
 
 import styled from 'styled-components/native'
 
+const HomeContent = styled.View`
+  padding: 0 20px;
+`
 
-const Title = styled.Text`
+const RecentGame = styled.Text`
   color: #707070;
-  text-align: center;
   font-style: italic;
-  font-size: 44px;
+  font-size: 22px;
   font-weight: 700;
-  margin: auto;
+  text-transform: uppercase;
+
+  margin: 30px 0 15px;
 `;
 
+const Filters = styled.Text`
+  color: #707070;
+  font-style: italic;
+  font-size: 17px;
+  font-weight: 400;
+`
+
 const Home = () => {
-  const [games, setGames] = React.useState([])
   const { auth } = useSelector((state: RootStateOrAny) => state)
   const dispatch = useDispatch()
 
@@ -28,14 +38,14 @@ const Home = () => {
   }, [])
 
   async function getGame() {
-    await api.get('/games', { 
+    const games = await api.get('/games', { 
       headers: {
         "Authorization": `Bearer ${auth.token}`
       }
-    }).then((res) => setGames(res.data)).catch((err) => alert(err.message))
+    })
 
 
-    const listGame = games.map((item: {
+    const listGame = games.data.map((item: {
       id: number;
       color: string; 
       type: string; 
@@ -65,10 +75,11 @@ const Home = () => {
   }
 
   return (
-    <>
+    <HomeContent>
+      <RecentGame>Recent Game</RecentGame>
+      <Filters>Filters</Filters>
       <GamesBtn />
-      <Title>Home</Title>
-    </>
+    </HomeContent>
   )
 }
 
