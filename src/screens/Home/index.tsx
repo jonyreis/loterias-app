@@ -44,6 +44,11 @@ const Home = () => {
       }
     })
 
+    const bets = await api.get('/game/bets', { 
+      headers: {
+        "Authorization": `Bearer ${auth.token}`
+      }
+    })
 
     const listGame = games.data.map((item: {
       id: number;
@@ -70,6 +75,11 @@ const Home = () => {
     dispatch({
       type: 'ADD_GAMES',
       payload: listGame
+    })
+
+    dispatch({
+      type: 'SAVE_BETS',
+      payload: bets.data
     })
 
   }
