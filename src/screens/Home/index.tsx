@@ -1,10 +1,24 @@
 import React from 'react'
+import { FlatList } from 'react-native'
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux'
 
 import GamesBtn from '../../components/GamesBtn'
 
 import api from '../../services/api'
+import convertToCurrency from '../../utils/convertToCurrency'
 
+import { 
+  HomeContent, 
+  RecentGame, 
+  Filters,
+  Bets,
+  Bet,
+  Separator,
+  BetInfo,
+  Numbers,
+  DateAndPrice,
+  TypeBet
+} from './styles'
 
 import styled from 'styled-components/native'
 
@@ -30,7 +44,7 @@ const Filters = styled.Text`
 `
 
 const Home = () => {
-  const { auth } = useSelector((state: RootStateOrAny) => state)
+  const { auth, bets } = useSelector((state: RootStateOrAny) => state)
   const dispatch = useDispatch()
 
   React.useEffect(() => {
@@ -89,6 +103,26 @@ const Home = () => {
       <RecentGame>Recent Game</RecentGame>
       <Filters>Filters</Filters>
       <GamesBtn />
+      <Bets>
+        <FlatList 
+          data={bets} 
+          keyExtractor={item => item.id} 
+          renderItem={({ item }) => {
+            return (
+              <Bet>
+              <Separator color={item.game?.color} />
+              <BetInfo>
+                <Numbers style={{ marginRight: item.game.type === 'Lotofácil' ? 12 : 0}}>
+                  {item.numbers}
+                </Numbers>
+                <DateAndPrice>{item['created_at']} - ({convertToCurrency(item.game?.price || 0)})</DateAndPrice>
+                <TypeBet color={item.game?.color}>{item.game?.type}</TypeBet>
+              </BetInfo>
+            </Bet>
+            );
+          }}
+        />
+      </Bets>
     </HomeContent>
   )
 }
