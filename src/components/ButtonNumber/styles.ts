@@ -8,7 +8,7 @@ interface IButtonNumberContainerProps {
 export const ButtonNumberContainer = styled.Pressable<IButtonNumberContainerProps>`
   background-color: ${props => props.selected ? '#27c383' : '#adc0c4'};
   border: none;
-  border-radius: 50%;
+  border-radius: 30px;
   color: #fff;
   font-size: 20px;
   font-weight: bold;

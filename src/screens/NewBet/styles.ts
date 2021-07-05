@@ -35,6 +35,27 @@ export const TextDescription = styled.Text`
   font-style: italic;
 `
 
+export const ActionButtonsMobileContainer = styled.View`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  max-width: 500px;
+  margin: 10px 0;
+`
+
+export const ActionButtonsMobile = styled.TouchableOpacity`
+  border: 1px solid #27c383;
+  border-radius: 10px;
+  background-color: transparent;
+  color: #27c383;
+  font-weight: 500;
+
+  padding: 8px 16px;
+  height: 32px;
+`
+
 export const NumbersContainer = styled.View`
   flex-direction: row;
   flex-wrap: wrap;

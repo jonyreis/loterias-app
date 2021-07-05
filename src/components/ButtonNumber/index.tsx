@@ -9,29 +9,41 @@ interface IButtonNumberProps {
   setArraySelectedNumbers?: any
 }
 
-const ButtonNumber = (props: IButtonNumberProps) => {
+const ButtonNumber = ({ 
+  value, 
+  selected, 
+  selectedGame, 
+  arraySelectedNumbers, 
+  setArraySelectedNumbers 
+}: IButtonNumberProps) => {
   function handleSelectNumber(btnNumber: any) {
     const num = Number(btnNumber.currentTarget.textContent)
 
-    if (props.arraySelectedNumbers.indexOf(num) === -1 && props.arraySelectedNumbers.length < props.selectedGame.maxNumber) {
-      btnNumber.currentTarget.style.background = '#27c383'
-      props.arraySelectedNumbers.push(num)
-    } else if (props.arraySelectedNumbers.indexOf(num) !== -1) {
+    if (arraySelectedNumbers.indexOf(num) === -1 && arraySelectedNumbers.length < selectedGame.maxNumber) {
+      btnNumber.currentTarget.style.background = selectedGame.color
+
+      setArraySelectedNumbers((prevState: any) => [...prevState, num])
+    } else if (arraySelectedNumbers.indexOf(num) !== -1) {
       btnNumber.currentTarget.style.background = '#adc0c4'
-      const indexSelect = props.arraySelectedNumbers.indexOf(num)
-      props.arraySelectedNumbers.splice(indexSelect, 1)
+
+      let newArray = arraySelectedNumbers
+
+      const indexSelect = arraySelectedNumbers.indexOf(num)
+      newArray.splice(indexSelect, 1)
+
+      setArraySelectedNumbers([...newArray])
     } else {
-      alert(`A ${props.selectedGame.type} pode ter até ${props.selectedGame.maxNumber} números selecionados`)
+      alert(`A ${selectedGame.type} pode ter até ${selectedGame.maxNumber} números selecionados`)
     }
   }
 
   return (
     <ButtonNumberContainer
-      selected={props.selected}
+      selected={selected}
       onPress={(e) => handleSelectNumber(e)}
       data-js="button-number"
     >
-      <NumberText>{String(props.value).padStart(2, '0')}</NumberText>
+      <NumberText>{String(value).padStart(2, '0')}</NumberText>
     </ButtonNumberContainer>
   )
 

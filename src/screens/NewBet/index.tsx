@@ -8,7 +8,9 @@ import {
   ChooseGame,
   DescriptionGame,
   NumbersContainer,
-  TextDescription
+  TextDescription,
+  ActionButtonsMobile,
+  ActionButtonsMobileContainer
 } from './styles'
 
 interface IGameProps {
@@ -41,10 +43,21 @@ const NewBet = () => {
       <NewBetText>New bet LOTOMANIA</NewBetText>
       <ChooseGame>Choose a game</ChooseGame>
       <SelectGame selectGame={selectGame} setSelectGame={setSelectGame} />
+      {arraySelectedNumbers.length > 0 ? 
+        <ActionButtonsMobileContainer>
+          <ActionButtonsMobile>
+            Complete Game
+          </ActionButtonsMobile>
+          <ActionButtonsMobile>
+            Clear Game
+          </ActionButtonsMobile>
+        </ActionButtonsMobileContainer>
+        :
       <DescriptionGame>
         <TextDescription style={{fontSize: 16, fontWeight: 'bold'}}>Fill your bet</TextDescription>
         <TextDescription style={{fontSize: 14 }}>{selectGame.description}</TextDescription>
       </DescriptionGame>
+      }
       <NumbersContainer>
         {Array(selectGame.range).fill('').map((item, index) =>
           <ButtonNumber
