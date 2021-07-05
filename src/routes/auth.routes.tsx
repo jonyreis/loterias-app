@@ -16,9 +16,8 @@ const AuthRoutes = () => {
     <NavigationContainer>
       <Header />
       <Tab.Navigator 
-      
-      screenOptions={({ route }) => ({
-        tabBarIcon: ({ color, size}) => {
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ color, size }) => {
           switch (route.name) {
             case 'Home':
               return <Feather name="home" size={size} color={color} />
@@ -36,15 +35,15 @@ const AuthRoutes = () => {
         tabBarOptions={{
           activeTintColor: '#000',
           inactiveTintColor: '#A5A5A5',
-          // iconStyle: { marginTop: '12px' },
-          // labelStyle: { fontSize: '14px', marginBottom: '16px' },
-          // style: {
-          //   borderTopLeftRadius: '16px',
-          //   borderTopRightRadius: '16px',
-          //   height: '80px',
-          //   position: "absolute",
-          //   bottom: 0
-          // }
+          iconStyle: { marginTop: 12 },
+          labelStyle: { fontSize: 14, marginBottom: 16 },
+          style: {
+            borderTopLeftRadius: 16,
+            borderTopRightRadius: 16,
+            height: 70,
+            position: "absolute",
+            bottom: 0
+          }
         }}
       >
         <Tab.Screen name="Home" component={Home} />
@@ -56,40 +55,3 @@ const AuthRoutes = () => {
 }
 
 export default AuthRoutes
-
-
-
-
-// screenOptions={({ route }) => ({
-//   tabBarIcon: ({ color, size }) => {
-//     let iconName;
-
-//     switch (route.name) {
-//       case 'Home':
-//         iconName = 'home';
-//         break;
-//       case 'Account':
-//         iconName = 'user';
-//         break;
-//       default:
-//         iconName = 'circle';
-//         break;
-//     }
-
-//     return <Feather name={iconName} size={size} color={color} />
-
-//   },
-// })}
-// tabBarOptions={{
-//   activeTintColor: '#000',
-//   inactiveTintColor: '#A5A5A5',
-//   iconStyle: { marginTop: '12px' },
-//   labelStyle: { fontSize: '14px', marginBottom: '16px' },
-//   style: {
-//     borderTopLeftRadius: '16px',
-//     borderTopRightRadius: '16px',
-//     height: '80px',
-//     position: "absolute",
-//     bottom: 0
-//   }
-// }}
