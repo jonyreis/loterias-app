@@ -36,29 +36,60 @@ export const TextDescription = styled.Text`
 `
 
 export const ActionButtonsMobileContainer = styled.View`
-  display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 
-  max-width: 500px;
-  margin: 10px 0;
+  min-width: 100%;
+  margin: 16px 0;
 `
 
 export const ActionButtonsMobile = styled.TouchableOpacity`
-  border: 1px solid #27c383;
+  border: 2px solid #27c383;
   border-radius: 10px;
   background-color: transparent;
   color: #27c383;
   font-weight: 500;
 
-  padding: 8px 16px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+
+  padding: 8px;
   height: 32px;
 `
 
-export const NumbersContainer = styled.View`
+export const TextActionButton = styled.Text`
+  color: #27c383;
+  font-size: 13px;
+  font-weight: bold;
+`
+
+export const CartButton = styled.TouchableOpacity`
+  background-color: #B5C300;
+  border-radius: 10px;
+
+  
+  flex-direction: row;
+  align-items: center;
+  padding: 8px;
+  height: 32px;
+`
+
+export const TextCartButton = styled.Text`
+  color: #fff;
+  font-size: 13px;
+  font-weight: bold;
+`
+
+interface INumberContainerProps {
+  numbersTop: boolean
+}
+
+export const NumbersContainer = styled.View<INumberContainerProps>`
   flex-direction: row;
   flex-wrap: wrap;
+  margin-top: ${props => props.numbersTop && '32px'};
 `
 
 

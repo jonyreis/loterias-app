@@ -1,4 +1,5 @@
 import React from 'react'
+import { Ionicons } from '@expo/vector-icons';
 
 import SelectGame from '../../components/SelectGame'
 import ButtonNumber from '../../components/ButtonNumber'
@@ -10,7 +11,10 @@ import {
   NumbersContainer,
   TextDescription,
   ActionButtonsMobile,
-  ActionButtonsMobileContainer
+  ActionButtonsMobileContainer,
+  TextActionButton,
+  CartButton,
+  TextCartButton
 } from './styles'
 
 interface IGameProps {
@@ -26,7 +30,7 @@ interface IGameProps {
 
 
 const NewBet = () => {
-  const [arraySelectedNumbers, setArraySelectedNumbers] = React.useState<number[]>([])
+  const [arraySelectedNumbers, setArraySelectedNumbers] = React.useState<Array<number>>([])
   const [selectGame, setSelectGame] = React.useState<IGameProps>({
     id: 0,
     type: '',
@@ -38,32 +42,84 @@ const NewBet = () => {
     range: 0
   })
 
+  React.useEffect(() => {
+    setArraySelectedNumbers([])
+  }, [selectGame])
+
+  function handleCompleteGame() {
+    if (arraySelectedNumbers.length >= selectGame.maxNumber) {
+      arraySelectedNumbers.splice(0, arraySelectedNumbers.length)
+    }
+
+    do {
+      let randomNumber = Math.ceil(Math.random() * selectGame.range)
+      if (arraySelectedNumbers.indexOf(randomNumber) === -1) {
+        arraySelectedNumbers.push(randomNumber)
+        let newArr = arraySelectedNumbers
+
+        setArraySelectedNumbers([...newArr])
+      }
+    }
+    while (arraySelectedNumbers.length < selectGame.maxNumber)
+  }
+
   return (
     <NewBetContent>
-      <NewBetText>New bet LOTOMANIA</NewBetText>
+      <NewBetText>New bet {selectGame.type}</NewBetText>
       <ChooseGame>Choose a game</ChooseGame>
       <SelectGame selectGame={selectGame} setSelectGame={setSelectGame} />
       {arraySelectedNumbers.length > 0 ? 
+        <>
+          <NumbersContainer numbersTop={true} >
+            {arraySelectedNumbers.sort((a, b) => a - b).map((item, index) =>
+              <ButtonNumber
+              value={item} 
+              key={item}
+              selected={arraySelectedNumbers.indexOf(item) !== -1 ? true : false}
+              selectGame={selectGame}
+              arraySelectedNumbers={arraySelectedNumbers}
+              setArraySelectedNumbers={setArraySelectedNumbers}
+              numbersTop={true}
+              />
+            )}
+          </NumbersContainer>
         <ActionButtonsMobileContainer>
-          <ActionButtonsMobile>
+            <ActionButtonsMobile onPress={() => handleCompleteGame()}>
+              <TextActionButton>
             Complete Game
+              </TextActionButton>
           </ActionButtonsMobile>
-          <ActionButtonsMobile>
+            <ActionButtonsMobile onPress={() => setArraySelectedNumbers([])}>
+              <TextActionButton>
             Clear Game
+              </TextActionButton>
           </ActionButtonsMobile>
+            <CartButton>
+              <Ionicons name="cart-outline" size={24} color="#fff" />
+              <TextCartButton>
+                Add to cart
+              </TextCartButton>
+            </CartButton>
         </ActionButtonsMobileContainer>
+        </>
         :
       <DescriptionGame>
         <TextDescription style={{fontSize: 16, fontWeight: 'bold'}}>Fill your bet</TextDescription>
         <TextDescription style={{fontSize: 14 }}>{selectGame.description}</TextDescription>
       </DescriptionGame>
       }
-      <NumbersContainer>
+      <NumbersContainer numbersTop={false}>
         {Array(selectGame.range).fill('').map((item, index) =>
           <ButtonNumber
             value={index + 1} 
             key={index + 1}
             selected={arraySelectedNumbers.indexOf(index + 1) !== -1 ? true : false}
+            selectGame={selectGame}
+            arraySelectedNumbers={arraySelectedNumbers}
+            setArraySelectedNumbers={setArraySelectedNumbers}
+            numbersTop={false}
+          />
+        )}
             selectedGame={selectGame}
             arraySelectedNumbers={arraySelectedNumbers}
             setArraySelectedNumbers={setArraySelectedNumbers}
