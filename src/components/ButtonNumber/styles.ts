@@ -2,28 +2,31 @@ import styled from 'styled-components/native'
 
 
 interface IButtonNumberContainerProps {
-  selected: boolean
+  numbersTop: boolean
 }
 
 export const ButtonNumberContainer = styled.Pressable<IButtonNumberContainerProps>`
-  background-color: ${props => props.selected ? '#27c383' : '#adc0c4'};
   border: none;
   border-radius: 30px;
   color: #fff;
-  font-size: 20px;
+
   font-weight: bold;
 
   flex-direction: row;
   align-items: center;
   justify-content: center;
 
-  width: 59px;
-  height: 59px;
-  margin: 8px;
+  width: ${props => props.numbersTop ? '40px' : '59px'};
+  height: ${props => props.numbersTop ? '40px' : '59px'};
+  margin: ${props => props.numbersTop ? '6px' : '8px'};
 `
 
-export const NumberText = styled.Text`
+interface INumberTextProps {
+  numbersTop: boolean
+}
+
+export const NumberText = styled.Text<INumberTextProps>`
   color: #fff;
-  font-size: 18px;
+  font-size: ${props => props.numbersTop ? '13px' : '18px'};
   font-weight: 700;
 `
