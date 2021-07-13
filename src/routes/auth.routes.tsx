@@ -15,25 +15,9 @@ const AuthRoutes = () => {
   return (
     <NavigationContainer>
       <Header />
-      <Tab.Navigator 
-        screenOptions={({ route }) => ({
-          tabBarIcon: ({ color, size }) => {
-          switch (route.name) {
-            case 'Home':
-              return <Feather name="home" size={size} color={color} />
-            
-            case 'NewBet':
-              return <ButtonNewBet />
-            case 'Account':
-              return <Feather name="user" size={size} color={color} />
-
-            default:
-              return <Feather name="circle" size={size} color={color} />
-          }
-        }
-        })}
+      <Tab.Navigator
         tabBarOptions={{
-          activeTintColor: '#000',
+          activeTintColor: '#B5C401',
           inactiveTintColor: '#A5A5A5',
           iconStyle: { marginTop: 12 },
           labelStyle: { fontSize: 14, marginBottom: 16 },
@@ -42,13 +26,32 @@ const AuthRoutes = () => {
             borderTopRightRadius: 16,
             height: 70,
             position: "absolute",
-            bottom: 0
+            bottom: 0,
           }
         }}
       >
-        <Tab.Screen name="Home" component={Home} />
-        <Tab.Screen name="NewBet" component={NewBet} />
-        <Tab.Screen name="Account" component={Account} />
+        <Tab.Screen 
+          options={{
+            tabBarIcon: ((props) => <Feather name="home" size={props.size} color={props.color} />)
+          }}
+          name="Home" 
+          component={Home} 
+        />
+        <Tab.Screen 
+          options={{
+            tabBarIcon: (() => <ButtonNewBet />),
+            title: ""
+          }}
+          name="NewBet" 
+          component={NewBet} 
+        />
+        <Tab.Screen 
+          options={{
+            tabBarIcon: ((props) => <Feather name="user" size={props.size} color={props.color} />),
+          }}
+          name="Account" 
+          component={Account} 
+        />
       </Tab.Navigator>
     </NavigationContainer>
   )

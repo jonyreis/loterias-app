@@ -120,11 +120,6 @@ const NewBet = () => {
             numbersTop={false}
           />
         )}
-            selectedGame={selectGame}
-            arraySelectedNumbers={arraySelectedNumbers}
-            setArraySelectedNumbers={setArraySelectedNumbers}
-          />
-        )}
       </NumbersContainer>
     </NewBetContent>
   )

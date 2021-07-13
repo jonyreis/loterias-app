@@ -22,27 +22,6 @@ import {
 
 import styled from 'styled-components/native'
 
-const HomeContent = styled.View`
-  padding: 0 20px;
-`
-
-const RecentGame = styled.Text`
-  color: #707070;
-  font-style: italic;
-  font-size: 22px;
-  font-weight: 700;
-  text-transform: uppercase;
-
-  margin: 30px 0 15px;
-`;
-
-const Filters = styled.Text`
-  color: #707070;
-  font-style: italic;
-  font-size: 17px;
-  font-weight: 400;
-`
-
 const Home = () => {
   const { auth, bets } = useSelector((state: RootStateOrAny) => state)
   const dispatch = useDispatch()
