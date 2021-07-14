@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux'
 
 import { Ionicons } from '@expo/vector-icons';
 
+import Cart from '../../components/Cart'
 import SelectGame from '../../components/SelectGame'
 import ButtonNumber from '../../components/ButtonNumber'
 import { 
@@ -32,6 +33,7 @@ interface IGameProps {
 
 
 const NewBet = () => {
+  const [listBet, setListBet] = React.useState<Array<any>>([])
   const [arraySelectedNumbers, setArraySelectedNumbers] = React.useState<Array<number>>([])
   const [selectGame, setSelectGame] = React.useState<IGameProps>({
     id: 0,
@@ -79,6 +81,45 @@ const NewBet = () => {
       }
     }
     while (arraySelectedNumbers.length < selectGame.maxNumber)
+  }
+
+  function handleDeleteBet(indexArray: number) {
+    let newArray = listBet
+    newArray.splice(indexArray, 1)
+    
+    setListBet([...newArray])
+  }
+
+  function handleTotalPrice() {
+    const totalPrice = listBet.reduce((accumulator, currentValue) => accumulator + currentValue.price, 0)
+
+    return totalPrice
+  }
+
+  async function handleSave() {
+    // if (handleTotalPrice() >= 3) {
+    //   await api.post('/game/bets', { list: listBet },
+    //   {
+    //     headers: { 
+    //       "Authorization": `Bearer ${auth.token}`
+    //     }
+    //   })
+    //   .then((response) => {
+    //     console.log(response)
+    //   })
+    //   .catch((error) => {
+    //     alert('Não foi possível criar a aposta.')
+    //     console.log(error)
+    //   })
+
+    //   dispatch({
+    //     type: 'SAVE_BETS',
+    //     payload: listBet
+    //   })
+    //   history.push('/home')
+    // } else {
+    //   alert('Para salvar os jogos o total deve ser de pelo menos R$ 30,00')
+    // }
   }
 
   return (
@@ -139,6 +180,12 @@ const NewBet = () => {
           />
         )}
       </NumbersContainer>
+      <Cart 
+        listBet={listBet}
+        onHandleDeleteBet={handleDeleteBet}
+        onHandleTotalPrice={handleTotalPrice}
+        onHandleSave={handleSave}
+      />
     </NewBetContent>
   )
 }

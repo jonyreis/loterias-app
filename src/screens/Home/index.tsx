@@ -20,8 +20,6 @@ import {
   TypeBet
 } from './styles'
 
-import styled from 'styled-components/native'
-
 const Home = () => {
   const { auth, bets } = useSelector((state: RootStateOrAny) => state)
   const dispatch = useDispatch()
