@@ -1,4 +1,6 @@
 import React from 'react'
+import { useDispatch } from 'react-redux'
+
 import { Ionicons } from '@expo/vector-icons';
 
 import SelectGame from '../../components/SelectGame'
@@ -42,9 +44,25 @@ const NewBet = () => {
     range: 0
   })
 
+  const dispatch = useDispatch()
+
   React.useEffect(() => {
     setArraySelectedNumbers([])
   }, [selectGame])
+
+  React.useEffect(() => {
+    if (arraySelectedNumbers.length > 0) {
+      dispatch({
+        type: 'IS_SHOPPING_CART',
+        payload: true
+      })
+    } else if (arraySelectedNumbers.length === 0) {
+      dispatch({
+        type: 'IS_SHOPPING_CART',
+        payload: false
+      })
+    }
+  }, [arraySelectedNumbers])
 
   function handleCompleteGame() {
     if (arraySelectedNumbers.length >= selectGame.maxNumber) {
