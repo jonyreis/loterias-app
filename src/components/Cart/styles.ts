@@ -8,16 +8,23 @@ export const CartContainer = styled.View<ICartContainerProps>`
   display: ${props => props.cartMobile ? 'block' : 'none'};
   background-color: #fff;
   border: 1px solid #e2e2e2;
-  border-radius: 10px;
 
   min-width: 300px;
   max-width: 340px;
-  min-height: 560px;
-  max-height: 600px;
+  min-height: calc(100vh - 70px);
+  max-height: calc(100vh - 70px);
   padding: 32px 16px 0;
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
+`
+
+export const CartText = styled.View`
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 110px;
 `
 
 export const TextH3 = styled.Text`

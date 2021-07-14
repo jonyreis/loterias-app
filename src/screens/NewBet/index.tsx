@@ -123,70 +123,72 @@ const NewBet = () => {
   }
 
   return (
-    <NewBetContent>
-      <NewBetText>New bet {selectGame.type}</NewBetText>
-      <ChooseGame>Choose a game</ChooseGame>
-      <SelectGame selectGame={selectGame} setSelectGame={setSelectGame} />
-      {arraySelectedNumbers.length > 0 ? 
-        <>
-          <NumbersContainer numbersTop={true} >
-            {arraySelectedNumbers.sort((a, b) => a - b).map((item, index) =>
-              <ButtonNumber
-              value={item} 
-              key={item}
-              selected={arraySelectedNumbers.indexOf(item) !== -1 ? true : false}
+    <>
+      <NewBetContent>
+        <NewBetText>New bet {selectGame.type}</NewBetText>
+        <ChooseGame>Choose a game</ChooseGame>
+        <SelectGame selectGame={selectGame} setSelectGame={setSelectGame} />
+        {arraySelectedNumbers.length > 0 ? 
+          <>
+            <NumbersContainer numbersTop={true} >
+              {arraySelectedNumbers.sort((a, b) => a - b).map((item, index) =>
+                <ButtonNumber
+                value={item} 
+                key={item}
+                selected={arraySelectedNumbers.indexOf(item) !== -1 ? true : false}
+                selectGame={selectGame}
+                arraySelectedNumbers={arraySelectedNumbers}
+                setArraySelectedNumbers={setArraySelectedNumbers}
+                numbersTop={true}
+                />
+              )}
+            </NumbersContainer>
+          <ActionButtonsMobileContainer>
+              <ActionButtonsMobile onPress={() => handleCompleteGame()}>
+                <TextActionButton>
+              Complete Game
+                </TextActionButton>
+            </ActionButtonsMobile>
+              <ActionButtonsMobile onPress={() => setArraySelectedNumbers([])}>
+                <TextActionButton>
+              Clear Game
+                </TextActionButton>
+            </ActionButtonsMobile>
+              <CartButton>
+                <Ionicons name="cart-outline" size={24} color="#fff" />
+                <TextCartButton>
+                  Add to cart
+                </TextCartButton>
+              </CartButton>
+          </ActionButtonsMobileContainer>
+          </>
+          :
+        <DescriptionGame>
+          <TextDescription style={{fontSize: 16, fontWeight: 'bold'}}>Fill your bet</TextDescription>
+          <TextDescription style={{fontSize: 14 }}>{selectGame.description}</TextDescription>
+        </DescriptionGame>
+        }
+        <NumbersContainer numbersTop={false}>
+          {Array(selectGame.range).fill('').map((item, index) =>
+            <ButtonNumber
+              value={index + 1} 
+              key={index + 1}
+              selected={arraySelectedNumbers.indexOf(index + 1) !== -1 ? true : false}
               selectGame={selectGame}
               arraySelectedNumbers={arraySelectedNumbers}
               setArraySelectedNumbers={setArraySelectedNumbers}
-              numbersTop={true}
-              />
-            )}
-          </NumbersContainer>
-        <ActionButtonsMobileContainer>
-            <ActionButtonsMobile onPress={() => handleCompleteGame()}>
-              <TextActionButton>
-            Complete Game
-              </TextActionButton>
-          </ActionButtonsMobile>
-            <ActionButtonsMobile onPress={() => setArraySelectedNumbers([])}>
-              <TextActionButton>
-            Clear Game
-              </TextActionButton>
-          </ActionButtonsMobile>
-            <CartButton>
-              <Ionicons name="cart-outline" size={24} color="#fff" />
-              <TextCartButton>
-                Add to cart
-              </TextCartButton>
-            </CartButton>
-        </ActionButtonsMobileContainer>
-        </>
-        :
-      <DescriptionGame>
-        <TextDescription style={{fontSize: 16, fontWeight: 'bold'}}>Fill your bet</TextDescription>
-        <TextDescription style={{fontSize: 14 }}>{selectGame.description}</TextDescription>
-      </DescriptionGame>
-      }
-      <NumbersContainer numbersTop={false}>
-        {Array(selectGame.range).fill('').map((item, index) =>
-          <ButtonNumber
-            value={index + 1} 
-            key={index + 1}
-            selected={arraySelectedNumbers.indexOf(index + 1) !== -1 ? true : false}
-            selectGame={selectGame}
-            arraySelectedNumbers={arraySelectedNumbers}
-            setArraySelectedNumbers={setArraySelectedNumbers}
-            numbersTop={false}
-          />
-        )}
-      </NumbersContainer>
+              numbersTop={false}
+            />
+          )}
+        </NumbersContainer>
+      </NewBetContent>
       <Cart 
         listBet={listBet}
         onHandleDeleteBet={handleDeleteBet}
         onHandleTotalPrice={handleTotalPrice}
         onHandleSave={handleSave}
       />
-    </NewBetContent>
+    </>
   )
 }
 
