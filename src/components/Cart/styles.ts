@@ -10,10 +10,10 @@ export const CartContainer = styled.View<ICartContainerProps>`
   border: 1px solid #e2e2e2;
 
   min-width: 300px;
-  max-width: 340px;
+  max-width: 320px;
   min-height: calc(100vh - 70px);
   max-height: calc(100vh - 70px);
-  padding: 32px 16px 0;
+  padding: 32px 32px 0;
   position: fixed;
   top: 0;
   right: 0;
@@ -49,17 +49,8 @@ export const Bets = styled.View`
 export const Bet = styled.View`
   flex-direction: row;
   align-items: center;
-  justify-content: space-between;
 
-  margin: 16px 0;
-`
-
-export const ButtonnRemoveBet = styled.TouchableOpacity`
-  background-color: transparent;
-  border: none;
-  width: 24px;
-  height: 24px;
-  padding: 4px;
+  margin: 12px 0;
 `
 
 export const Separator = styled.View`
@@ -74,10 +65,10 @@ export const BetInfo = styled.View`
   display: flex;
   flex-direction: column;
   justify-self: left;
-
   text-align: left;
 
-  margin-left: 14px;
+  width: 196px;
+  margin-left: 16px;
 `
 
 export const ArrayNumbers = styled.View`
@@ -85,44 +76,61 @@ export const ArrayNumbers = styled.View`
   flex-wrap: wrap;
   margin-bottom: 8px;
   word-break: break-word;
-  
-  h4 {
-    color: #868686;
 
-    font-size: 15px;
-    font-style: italic;
-    font-weight: bold;
-    letter-spacing: 0px;
+  max-width: 100%;
+`
 
-    &::after {
-      content: ',';
-      display: inline-block;
-      
-      margin-right: 4px;
-      &:last-child {
-        display: none;
-      }
-    }
+export const Numbers = styled.Text`
+  color: #868686;
+
+  font-size: 12px;
+  font-style: italic;
+  font-weight: bold;
+  letter-spacing: 0px;
+
+  &::after {
+    content: ',';
+    display: inline-block;
+    
+    margin-right: 4px;
     &:last-child {
-      &::after {
       display: none;
-      }
+    }
+  }
+  &:last-child {
+    &::after {
+    display: none;
     }
   }
 `
 
-export const TypeAndPrice = styled.View`
-  strong {
-    color: #7f3992;
-    font-size: 16px;
-    font-style: italic;
-    font-weight: bold;
-  }
+export const DateAndPrice = styled.View`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 
-  span {
-    color: #868686;
-    margin-left: 8px;
-  }
+  width: 100%;
+`
+
+export const DatePrice = styled.Text`
+  color: #868686;
+  font-weight: 300;
+  font-size: 12px;
+`
+
+export const Type = styled.Text`
+  font-size: 16px;
+  font-weight: 700;
+  font-style: italic;
+`
+
+export const ButtonnRemoveBet = styled.TouchableOpacity`
+  background-color: transparent;
+  border: none;
+  width: 24px;
+  height: 24px;
+  padding: 4px;
 `
 
 export const Total = styled.View`

@@ -3,7 +3,7 @@ import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import convertToCurrency from '../../utils/convertToCurrency'
 
 
-import { AntDesign, Ionicons } from '@expo/vector-icons'
+import { AntDesign, Ionicons, FontAwesome5 } from '@expo/vector-icons'
 
 import { 
   CartContainer,
@@ -15,8 +15,11 @@ import {
   ButtonnRemoveBet, 
   Separator, 
   BetInfo, 
-  ArrayNumbers, 
-  TypeAndPrice, 
+  ArrayNumbers,
+  Numbers,
+  DateAndPrice,
+  DatePrice,
+  Type,
   Total, 
   Save 
 } from './styles'
@@ -62,20 +65,20 @@ const Cart = ({
         <Ionicons name="close" size={32} color="#B5C401" />
       </BtnClose>
       <Bets data-js="bets">
-        {bets.map((item: { key: React.Key | null | undefined; color: any; numbers: any; type: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; price: number; }, index: number) => 
+        {bets.map((item: { key: string | number | null | undefined; color: any; numbers: any; type: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; date: any; price: number; }, index: number) => 
           <Bet data-js="bet" key={item.key}>
-            <ButtonnRemoveBet onPress={() => onHandleDeleteBet(index)}>
-              {/* <img src={Trash} alt="trash" /> */}trash
-            </ButtonnRemoveBet>
-            {/* <Separator style={{background: item.color}}></Separator> */}
+            <Separator style={{ backgroundColor: item.color }}></Separator>
             <BetInfo>
               <ArrayNumbers>
-                <h4>{String(item.numbers)}</h4>
+                <Numbers>{String(item.numbers)}</Numbers>
               </ArrayNumbers>
-              <TypeAndPrice>
-                <strong style={{color: item.color}}>{item.type}</strong>
-                <span>{convertToCurrency(item.price)}</span>
-              </TypeAndPrice>
+              <DateAndPrice>
+                <DatePrice>{item.date} {convertToCurrency(item.price)} </DatePrice>
+                <ButtonnRemoveBet onPress={() => onHandleDeleteBet(index)}>
+                  <FontAwesome5 name="trash-alt" size={20} color="#707070" />
+                </ButtonnRemoveBet>
+              </DateAndPrice>
+              <Type style={{ color: item.color }} >{item.type}</Type>
             </BetInfo>
           </Bet>
         )}

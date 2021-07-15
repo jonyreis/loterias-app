@@ -1,5 +1,5 @@
 import React from 'react'
-import { useDispatch } from 'react-redux'
+import { getDate } from '../../utils/getDate'
 
 import { Ionicons } from '@expo/vector-icons';
 
@@ -46,11 +46,19 @@ const NewBet = () => {
     range: 0
   })
 
+  const { auth } = useSelector((state: RootStateOrAny) => state)
   const dispatch = useDispatch()
 
   React.useEffect(() => {
     setArraySelectedNumbers([])
   }, [selectGame])
+
+  React.useEffect(() => {
+    dispatch({
+      type: 'SAVE_BETS',
+      payload: listBet
+    })
+  }, [listBet])
 
   React.useEffect(() => {
     if (arraySelectedNumbers.length > 0) {
@@ -94,6 +102,41 @@ const NewBet = () => {
     const totalPrice = listBet.reduce((accumulator, currentValue) => accumulator + currentValue.price, 0)
 
     return totalPrice
+  }
+
+  function handleAddToCart() {
+    if (arraySelectedNumbers.length > 0 && arraySelectedNumbers.length === selectGame.maxNumber) {
+      const numbersToString = transformNumbers(arraySelectedNumbers)
+
+      let currentBet = {
+        numbers: numbersToString,
+        game_id: selectGame.id,
+        type: selectGame.type,
+        color: selectGame.color,
+        price: selectGame.price,
+        date: getDate(),
+        key: `${selectGame.type}-${new Date().getTime()}`
+      }
+      
+      setListBet(prevState => [...prevState, currentBet])
+      setArraySelectedNumbers([])
+    } else {
+      alert(`A ${selectGame.type} deve ter ${selectGame.maxNumber} números selecionados`) 
+    }
+  }
+
+  function transformNumbers(currentArray: any[]) {
+    const numbersToString = [...currentArray].sort(handleCompareNumbers)
+
+    for (let i = 0; i < numbersToString.length; i++) {
+      numbersToString[i] = numbersToString[i].toString().padStart(2, '0')
+    }
+
+    return numbersToString.join(', ')
+  }
+
+  function handleCompareNumbers(a: number, b: number) {
+    return a - b;
   }
 
   async function handleSave() {
@@ -154,7 +197,7 @@ const NewBet = () => {
               Clear Game
                 </TextActionButton>
             </ActionButtonsMobile>
-              <CartButton>
+            <CartButton onPress={() => handleAddToCart()}>
                 <Ionicons name="cart-outline" size={24} color="#fff" />
                 <TextCartButton>
                   Add to cart
