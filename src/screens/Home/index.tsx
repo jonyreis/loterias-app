@@ -45,10 +45,7 @@ const Home = () => {
   }, [])
 
   React.useEffect(() => {
-    console.log(selectedFilter)
-    if (selectedFilter[0] === '') {
-      setListWithFilter(bets)
-    }
+    if (selectedFilter.length <= 0 ) return setListWithFilter(bets)
     
     const filteredList = bets.filter((bet: { game: { type: string; } }) => {
       if (bet.game.type === selectedFilter[0] || bet.game.type === selectedFilter[1] || bet.game.type === selectedFilter[2]) {
@@ -101,7 +98,7 @@ const Home = () => {
 
     dispatch({
       type: 'SAVE_BETS',
-      payload: [...bets.data]
+      payload: bets.data
     })
 
     setListWithFilter([...bets.data])

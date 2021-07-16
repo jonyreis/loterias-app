@@ -26,16 +26,19 @@ interface IMyCheckbox {
 const MyCheckbox = ({ title, color, selectedFilter, setSelectedFilter }: IMyCheckbox) => {
   const [checked, setChecked] = React.useState<boolean>(false)
 
-  if (checked) {
-    let aaa = title
-    setSelectedFilter(prevState => [...prevState, aaa])
-  } else {
+  React.useEffect(() => {
+    if (checked) {
+      let newArraySelected = selectedFilter
+      newArraySelected.push(title)
+      setSelectedFilter([...newArraySelected])
+    } else {
       let newArraySelected = selectedFilter
       let indexRemove = newArraySelected.indexOf(title)
       newArraySelected.splice(indexRemove, 1)
 
       setSelectedFilter([...newArraySelected])
-  }
+    }
+  }, [checked])
 
 
   return (
