@@ -16,8 +16,27 @@ const Text = styled.Text`
   margin: auto;
 `
 
-const MyCheckbox = ({ title, color }: any) => {
+interface IMyCheckbox {
+  title: string
+  color: string
+  selectedFilter: Array<string>
+  setSelectedFilter: React.Dispatch<React.SetStateAction<Array<string>>>
+}
+
+const MyCheckbox = ({ title, color, selectedFilter, setSelectedFilter }: IMyCheckbox) => {
   const [checked, setChecked] = React.useState<boolean>(false)
+
+  if (checked) {
+    let aaa = title
+    setSelectedFilter(prevState => [...prevState, aaa])
+  } else {
+      let newArraySelected = selectedFilter
+      let indexRemove = newArraySelected.indexOf(title)
+      newArraySelected.splice(indexRemove, 1)
+
+      setSelectedFilter([...newArraySelected])
+  }
+
 
   return (
     <Pressable

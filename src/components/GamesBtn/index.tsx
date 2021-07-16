@@ -5,7 +5,6 @@ import styled from 'styled-components/native'
 import MyCheckbox from './MyCheckbox'
 
 
-
 const CheckboxContent = styled.View`
   flex: 1;
   flex-direction: row;
@@ -15,8 +14,13 @@ const CheckboxContent = styled.View`
   margin: 15px auto 0;
 `
 
+interface IGamesBtnProps {
+  selectedFilter: Array<string>
+  setSelectedFilter: React.Dispatch<React.SetStateAction<Array<string>>>
+}
 
-const GamesBtn = () => {
+
+const GamesBtn = ({ selectedFilter, setSelectedFilter }: IGamesBtnProps ) => {
   const { games } = useSelector((state: RootStateOrAny) => state)
 
   return (
@@ -35,6 +39,8 @@ const GamesBtn = () => {
           key={item.id}
           title={item.type}  
           color={item.color}
+          selectedFilter={selectedFilter}
+          setSelectedFilter={setSelectedFilter}
         />
       )}
     </CheckboxContent>

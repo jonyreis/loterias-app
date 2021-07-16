@@ -14,7 +14,7 @@ export const CartContainer = styled.View<ICartContainerProps>`
   min-height: calc(100vh - 70px);
   max-height: calc(100vh - 70px);
   padding: 32px 32px 0;
-  position: fixed;
+  position: absolute;
   top: 0;
   right: 0;
 `
@@ -49,8 +49,6 @@ export const Bets = styled.View`
 export const Bet = styled.View`
   flex-direction: row;
   align-items: center;
-
-  margin: 12px 0;
 `
 
 export const Separator = styled.View`
@@ -68,13 +66,11 @@ export const BetInfo = styled.View`
   text-align: left;
 
   width: 196px;
-  margin-left: 16px;
 `
 
 export const ArrayNumbers = styled.View`
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: 8px;
   word-break: break-word;
 
   max-width: 100%;
@@ -133,30 +129,31 @@ export const ButtonnRemoveBet = styled.TouchableOpacity`
   padding: 4px;
 `
 
-export const Total = styled.View`
+export const TotalText = styled.Text`
   background-color: #fff;
   color: #868686;
 
   padding: 4px;
   position: absolute;
-  bottom: 140px;
+  bottom: 100px;
+  left: 30px;
 
-  h2 {
-    font-size: 24px;
-    font-weight: 400;
-    text-transform: uppercase;
-    span {
-      font-style: italic;
-      font-weight: bold;
-    }
-  }
+  font-size: 22px;
+  font-weight: 400;
+  text-transform: uppercase;
+`
+
+export const TextItalic = styled.Text`
+  font-style: italic;
+  font-weight: bold;
 `
 
 export const Save = styled.View`
   background-color: #f4f4f4;
   border: 1px solid #e2e2e2;
-  border-radius: 0 0 8px 8px;
+  /* border-radius: 0 0 8px 8px; */
   display: flex;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
 
@@ -166,21 +163,22 @@ export const Save = styled.View`
   position: absolute;
   bottom: 0;
   left: 0;
+`
 
-  button {
-    border: none;
+export const ButtonSave = styled.TouchableOpacity`
+  border: none;
 
-    background-color: transparent;
-    color: #27c383;
-    font-size: 35px;
-    font-style: italic;
-    font-weight: bold;
-    cursor: pointer;
-    padding: 32px;
-  }
+  background-color: transparent;
+  color: #B5C401;
+  font-size: 35px;
+  font-style: italic;
+  font-weight: bold;
+  font-family: sans-serif;
 
-  img {
-    color: #27c383;
-    width: 24px;
-  }
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 32px;
 `

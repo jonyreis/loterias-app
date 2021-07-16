@@ -3,7 +3,7 @@ import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import convertToCurrency from '../../utils/convertToCurrency'
 
 
-import { AntDesign, Ionicons, FontAwesome5 } from '@expo/vector-icons'
+import { AntDesign, Ionicons, FontAwesome5, Feather } from '@expo/vector-icons'
 
 import { 
   CartContainer,
@@ -20,8 +20,10 @@ import {
   DateAndPrice,
   DatePrice,
   Type,
-  Total, 
-  Save 
+  TotalText,
+  TextItalic,
+  Save,
+  ButtonSave
 } from './styles'
 
 interface IListBetProps {
@@ -66,16 +68,16 @@ const Cart = ({
       </BtnClose>
       <Bets data-js="bets">
         {bets.map((item: { key: string | number | null | undefined; color: any; numbers: any; type: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; date: any; price: number; }, index: number) => 
-          <Bet data-js="bet" key={item.key}>
+          <Bet data-js="bet" key={item.key} style={{ marginTop: 12, marginBottom: 12 }}>
             <Separator style={{ backgroundColor: item.color }}></Separator>
-            <BetInfo>
-              <ArrayNumbers>
+            <BetInfo style={{ marginLeft: 16 }}>
+              <ArrayNumbers style={{ marginTop: 0, marginBottom: 8 }}>
                 <Numbers>{String(item.numbers)}</Numbers>
               </ArrayNumbers>
               <DateAndPrice>
-                <DatePrice>{item.date} {convertToCurrency(item.price)} </DatePrice>
+                <DatePrice>{item.date} {convertToCurrency(item.price || 0)} </DatePrice>
                 <ButtonnRemoveBet onPress={() => onHandleDeleteBet(index)}>
-                  <FontAwesome5 name="trash-alt" size={20} color="#707070" />
+                  <FontAwesome5 name="trash-alt" size={18} color="#707070" />
                 </ButtonnRemoveBet>
               </DateAndPrice>
               <Type style={{ color: item.color }} >{item.type}</Type>
@@ -83,15 +85,15 @@ const Cart = ({
           </Bet>
         )}
       </Bets>
-      <Total>
-        <h2 data-js="total-price">
-          <span>Cart</span> Total: {convertToCurrency(onHandleTotalPrice())}
-        </h2>
-      </Total>
-      <Save>
-        <button type="button" onClick={() => onHandleSave()}>
+        <TotalText>
+          <TextItalic>Cart</TextItalic> Total: {convertToCurrency(onHandleTotalPrice() || 0)}
+        </TotalText>
+      <Save style={{ borderRadius: 8 }}>
+        <ButtonSave onPress={() => onHandleSave()}>
           Save 
-        </button>
+          <Feather name="arrow-right" style={{  marginLeft: 16 }}  size={28}  color="#B5C401" />
+        </ButtonSave>
+        
       </Save>
     </CartContainer>
   )

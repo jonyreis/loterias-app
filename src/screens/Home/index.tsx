@@ -1,4 +1,5 @@
 import React from 'react'
+import { useRoute } from '@react-navigation/native'
 import { FlatList } from 'react-native'
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux'
 
@@ -21,12 +22,42 @@ import {
 } from './styles'
 
 const Home = () => {
+  const [selectedFilter, setSelectedFilter] = React.useState<Array<string>>([])
+  const [listWithFilter, setListWithFilter] = React.useState<Array<any>>([])
+
   const { auth, bets } = useSelector((state: RootStateOrAny) => state)
   const dispatch = useDispatch()
+  const route = useRoute()
+  console.log(route.name)
+  
+  React.useEffect(() => {
+    console.log(route)
+    if (route.name === "Home") {
+      dispatch({
+        type: 'IS_SHOPPING_CART',
+        payload: false
+      })
+    }
+  }, [])
 
   React.useEffect(() => {
     getGame()
   }, [])
+
+  React.useEffect(() => {
+    console.log(selectedFilter)
+    if (selectedFilter[0] === '') {
+      setListWithFilter(bets)
+    }
+    
+    const filteredList = bets.filter((bet: { game: { type: string; } }) => {
+      if (bet.game.type === selectedFilter[0] || bet.game.type === selectedFilter[1] || bet.game.type === selectedFilter[2]) {
+        return bet
+      } 
+    })
+
+    setListWithFilter(filteredList)
+  }, [selectedFilter])
 
   async function getGame() {
     const games = await api.get('/games', { 
@@ -70,32 +101,33 @@ const Home = () => {
 
     dispatch({
       type: 'SAVE_BETS',
-      payload: bets.data
+      payload: [...bets.data]
     })
 
+    setListWithFilter([...bets.data])
   }
 
   return (
     <HomeContent>
       <RecentGame>Recent Game</RecentGame>
       <Filters>Filters</Filters>
-      <GamesBtn />
+      <GamesBtn selectedFilter={selectedFilter} setSelectedFilter={setSelectedFilter} />
       <Bets>
         <FlatList 
-          data={bets} 
+          data={listWithFilter} 
           keyExtractor={item => item.id} 
           renderItem={({ item }) => {
             return (
               <Bet>
-              <Separator color={item.game?.color} />
-              <BetInfo>
-                <Numbers style={{ marginRight: item.game.type === 'Lotofácil' ? 12 : 0}}>
-                  {item.numbers}
-                </Numbers>
-                <DateAndPrice>{item['created_at']} - ({convertToCurrency(item.game?.price || 0)})</DateAndPrice>
-                <TypeBet color={item.game?.color}>{item.game?.type}</TypeBet>
-              </BetInfo>
-            </Bet>
+                <Separator color={item.game?.color} />
+                <BetInfo>
+                  <Numbers style={{ marginRight: item.game.type === 'Lotofácil' ? 12 : 0}}>
+                    {item.numbers}
+                  </Numbers>
+                  <DateAndPrice>{item['created_at']} - ({convertToCurrency(item.game?.price || 0)})</DateAndPrice>
+                  <TypeBet color={item.game?.color}>{item.game?.type}</TypeBet>
+                </BetInfo>
+              </Bet>
             );
           }}
         />
