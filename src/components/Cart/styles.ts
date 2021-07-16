@@ -1,20 +1,17 @@
 import styled from 'styled-components/native'
 
-interface ICartContainerProps {
-  cartMobile: boolean
-}
 
-export const CartContainer = styled.View<ICartContainerProps>`
-  display: ${props => props.cartMobile ? 'block' : 'none'};
+export const CartContainer = styled.View`
   background-color: #fff;
   border: 1px solid #e2e2e2;
 
   min-width: 300px;
   max-width: 320px;
-  min-height: calc(100vh - 70px);
-  max-height: calc(100vh - 70px);
+  min-height: 520px;
+  max-height: 700px;
+  height: 560px;
   padding: 32px 32px 0;
-  position: fixed;
+  position: absolute;
   top: 0;
   right: 0;
 `
@@ -43,7 +40,7 @@ export const BtnClose = styled.TouchableOpacity`
 `
 
 export const Bets = styled.View`
-  max-height: calc(80vh - 260px);
+  max-height: 400px;
 `
 
 export const Bet = styled.View`
@@ -51,27 +48,17 @@ export const Bet = styled.View`
   align-items: center;
 `
 
-export const Separator = styled.View`
-  content: "";
-  display: inline-block;
-  border-radius: 100px 0px 0px 100px;
-  width: 4px;
-  height: 86px;
-`
-
 export const BetInfo = styled.View`
   display: flex;
   flex-direction: column;
-  justify-self: left;
   text-align: left;
 
-  width: 196px;
+  width: 100%;
 `
 
 export const ArrayNumbers = styled.View`
   display: flex;
   flex-wrap: wrap;
-  word-break: break-word;
 
   max-width: 100%;
 `
@@ -83,7 +70,7 @@ export const Numbers = styled.Text`
   font-style: italic;
   font-weight: bold;
   letter-spacing: 0px;
-
+  max-width: 196px;
   &::after {
     content: ',';
     display: inline-block;
@@ -106,7 +93,7 @@ export const DateAndPrice = styled.View`
   align-items: center;
   justify-content: space-between;
 
-  width: 100%;
+  max-width: 196px;
 `
 
 export const DatePrice = styled.Text`
@@ -151,18 +138,18 @@ export const TextItalic = styled.Text`
 export const Save = styled.View`
   background-color: #f4f4f4;
   border: 1px solid #e2e2e2;
-  /* border-radius: 0 0 8px 8px; */
+  border-radius: 0;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
 
+  min-width: 320px;
   width: 100%;
   height: 100px;
-
   position: absolute;
   bottom: 0;
-  left: 0;
+  right: 0;
 `
 
 export const ButtonSave = styled.TouchableOpacity`

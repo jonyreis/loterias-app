@@ -20,12 +20,12 @@ export const ChooseGame = styled.Text`
   font-weight: 400;
 `
 
-export const DescriptionGame = styled.Text`
+export const DescriptionGame = styled.View`
   color: #868686;
   font-size: 17px;
   font-style: italic;
 
-  margin: 40px 0;
+  margin: 40px 0 20px;
 `
 
 export const TextDescription = styled.Text`
@@ -86,5 +86,5 @@ interface INumberContainerProps {
 export const NumbersContainer = styled.View<INumberContainerProps>`
   flex-direction: row;
   flex-wrap: wrap;
-  margin-top: ${props => props.numbersTop && '32px'};
+  margin-top: ${props => props.numbersTop ? '40px' : '0'};
 `

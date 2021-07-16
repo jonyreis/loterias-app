@@ -8,14 +8,21 @@ import { AntDesign, Feather } from '@expo/vector-icons'
 import { HeaderContent, ButtonLogo, TGL, LineTitle, ShoppingCartAndLogout } from './styles'
 
 const Header = () => {
-  const { shoppingCart } = useSelector((state: RootStateOrAny) => state)
+  const { shoppingCart, cart } = useSelector((state: RootStateOrAny) => state)
   const dispatch = useDispatch()
   
   function handleCart() {
-    dispatch({
-      type: 'CART_ON',
-      payload: true
-    })
+    if (cart) {
+      dispatch({
+        type: 'CART_OFF',
+        payload: false
+      })
+    } else {
+      dispatch({
+        type: 'CART_ON',
+        payload: true
+      })
+    }
   }
 
   function handleLogout() {

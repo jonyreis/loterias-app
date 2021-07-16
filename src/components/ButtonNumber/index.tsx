@@ -1,5 +1,5 @@
 import React from 'react'
-import { ButtonNumberContainer, NumberText } from './styles'
+import { ButtonNumberContainer, NumberText, X } from './styles'
 
 interface IGameProps {
   id: number
@@ -36,16 +36,14 @@ const ButtonNumber = ({
   }, [arraySelectedNumbers])
 
 
-  function handleSelectNumber(btnNumber: any) {
-    const num = Number(btnNumber.currentTarget.textContent)
-
-    if (arraySelectedNumbers.indexOf(num) === -1 && arraySelectedNumbers.length < selectGame.maxNumber) {
-      setArraySelectedNumbers((prevState: any) => [...prevState, num])
+  function handleSelectNumber(value: number) {
+    if (arraySelectedNumbers.indexOf(value) === -1 && arraySelectedNumbers.length < selectGame.maxNumber) {
+      setArraySelectedNumbers((prevState: any) => [...prevState, value])
       setButtonSelect(true)
-    } else if (arraySelectedNumbers.indexOf(num) !== -1) {
+    } else if (arraySelectedNumbers.indexOf(value) !== -1) {
       let newArray = arraySelectedNumbers
 
-      const indexSelect = arraySelectedNumbers.indexOf(num)
+      const indexSelect = arraySelectedNumbers.indexOf(value)
       newArray.splice(indexSelect, 1)
       
       setArraySelectedNumbers([...newArray])
@@ -58,11 +56,12 @@ const ButtonNumber = ({
   return (
     <ButtonNumberContainer
       numbersTop={numbersTop}
-      onPress={(e) => handleSelectNumber(e)}
+      onPress={() => handleSelectNumber(value)}
       data-js="button-number"
       style={{ backgroundColor: selected ? selectGame.color : "#adc0c4"}}
     >
       <NumberText numbersTop={numbersTop}>{String(value).padStart(2, '0')}</NumberText>
+      {numbersTop ? <X>x</X> : null}
     </ButtonNumberContainer>
   )
 

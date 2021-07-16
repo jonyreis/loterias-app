@@ -1,4 +1,5 @@
 import React from 'react'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native'
 import { Form } from '@unform/mobile'
 import * as Yup from 'yup'
@@ -62,18 +63,19 @@ const FormComponent = ({ titleForm }: any) => {
         break;
     
       case "Authentication":
-        await api.post('/sessions', { email: user.email, password: user.password })
-        .then((response) => {
-          if (response.status === 200) {
-            dispatch({
-              type: 'USER_AUTH',
-              payload: response.data
-            })
-          }
-        })
-        .catch((error) => {
+        try {
+          const response = await api.post('/sessions', { email: user.email, password: user.password })
+            if (response.status === 200) {
+              dispatch({
+                type: 'USER_AUTH',
+                payload: response.data
+              })
+              const jsonValue = JSON.stringify(response.data)
+              await AsyncStorage.setItem('@auth', jsonValue)
+            }
+        } catch (error) {
           alert(error.message)
-        })
+        }
         break;
       
       case "Forgot Password":

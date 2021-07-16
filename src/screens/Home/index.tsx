@@ -44,17 +44,9 @@ const Home = () => {
   }, [selectedFilter])
 
   async function getGame() {
-    const games = await api.get('/games', { 
-      headers: {
-        "Authorization": `Bearer ${auth.token}`
-      }
-    })
+    const games = await api.get('/games')
 
-    const bets = await api.get('/game/bets', { 
-      headers: {
-        "Authorization": `Bearer ${auth.token}`
-      }
-    })
+    const betsApi = await api.get('/game/bets')
 
     const listGame = games.data.map((item: {
       id: number;
@@ -85,10 +77,10 @@ const Home = () => {
 
     dispatch({
       type: 'SAVE_BETS',
-      payload: bets.data
+      payload: betsApi.data
     })
 
-    setListWithFilter([...bets.data])
+    setListWithFilter([...betsApi.data])
   }
 
   return (
