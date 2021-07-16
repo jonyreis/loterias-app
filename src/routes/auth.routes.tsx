@@ -9,6 +9,14 @@ import Account from '../screens/Account'
 import ButtonNewBet from '../components/ButtonNewBet'
 import Header from '../components/Header';
 
+import styled from 'styled-components/native'
+
+const BorderButton = styled.View`
+  border: 5px solid #fff;
+  border-radius: 100px;
+`
+
+
 const Tab = createBottomTabNavigator()
 
 const AuthRoutes = () => {
@@ -39,7 +47,20 @@ const AuthRoutes = () => {
         />
         <Tab.Screen 
           options={{
-            tabBarIcon: (() => <ButtonNewBet />),
+            tabBarIcon: (() => 
+              <BorderButton style={{ 
+                shadowColor: "#000",
+                shadowOffset: {
+                  width: 0,
+                  height: 2,
+                },
+                shadowOpacity: 0.23,
+                shadowRadius: 2.62,
+                
+                elevation: 4 
+              }}>
+                <ButtonNewBet />
+              </BorderButton>),
             title: ""
           }}
           name="NewBet" 

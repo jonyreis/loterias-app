@@ -1,21 +1,6 @@
 import React from 'react'
-import styled from 'styled-components/native'
 
-const Pressable = styled.Pressable`
-  border-radius: 100px;
-  
-  height: 30px;
-  padding: 8px 20px;
-`
-
-const Text = styled.Text`
-  font-size: 14px;
-  font-style: italic;
-  font-weight: bold;
-
-  margin: auto;
-`
-
+import { Pressable, Text } from './styles'
 interface IMyCheckbox {
   title: string
   color: string

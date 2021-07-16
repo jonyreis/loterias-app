@@ -1,19 +1,9 @@
 import React from 'react'
 import { useSelector, RootStateOrAny } from 'react-redux'
-import styled from 'styled-components/native'
 
 import MyCheckbox from './MyCheckbox'
 
-
-const CheckboxContent = styled.View`
-  flex: 1;
-  flex-direction: row;
-  justify-content: space-between;
-
-  width: 100%;
-  margin: 15px auto 0;
-`
-
+import { CheckboxContent } from './styles'
 interface IGamesBtnProps {
   selectedFilter: Array<string>
   setSelectedFilter: React.Dispatch<React.SetStateAction<Array<string>>>

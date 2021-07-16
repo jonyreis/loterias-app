@@ -35,16 +35,16 @@ const Header = () => {
         <TGL>TGL</TGL>
         <LineTitle></LineTitle>
       </ButtonLogo>
-      <ShoppingCartAndLogout shoppingCart={shoppingCart}>
-        {shoppingCart &&
+      <ShoppingCartAndLogout shoppingCart={true}>
+        {/* {shoppingCart && */}
           <TouchableOpacity onPress={() => handleCart()}>
             <AntDesign name="shoppingcart" size={32} color="#B5C401" />
           </TouchableOpacity>
-        }
+        {/* } */}
         <TouchableOpacity onPress={() => handleLogout()}>
           <Feather name="log-out" size={28} color="#C1C1C1" />
         </TouchableOpacity>
-        </ShoppingCartAndLogout>
+      </ShoppingCartAndLogout>
     </HeaderContent>
   )
 }

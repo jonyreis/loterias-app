@@ -1,7 +1,10 @@
 import React from 'react'
-import { getDate } from '../../utils/getDate'
-
+import { useDispatch, useSelector, RootStateOrAny } from 'react-redux'
 import { Ionicons } from '@expo/vector-icons';
+
+import { getDate } from '../../utils/getDate'
+import api from '../../services/api'
+
 
 import Cart from '../../components/Cart'
 import SelectGame from '../../components/SelectGame'
@@ -32,7 +35,7 @@ interface IGameProps {
 }
 
 
-const NewBet = () => {
+const NewBet = ({ navigation }: any) => {
   const [listBet, setListBet] = React.useState<Array<any>>([])
   const [arraySelectedNumbers, setArraySelectedNumbers] = React.useState<Array<number>>([])
   const [selectGame, setSelectGame] = React.useState<IGameProps>({
@@ -55,7 +58,7 @@ const NewBet = () => {
 
   React.useEffect(() => {
     dispatch({
-      type: 'SAVE_BETS',
+      type: 'ADD_BET_TO_CART',
       payload: listBet
     })
   }, [listBet])
@@ -140,35 +143,39 @@ const NewBet = () => {
   }
 
   async function handleSave() {
-    // if (handleTotalPrice() >= 3) {
-    //   await api.post('/game/bets', { list: listBet },
-    //   {
-    //     headers: { 
-    //       "Authorization": `Bearer ${auth.token}`
-    //     }
-    //   })
-    //   .then((response) => {
-    //     console.log(response)
-    //   })
-    //   .catch((error) => {
-    //     alert('Não foi possível criar a aposta.')
-    //     console.log(error)
-    //   })
+    if (handleTotalPrice() >= 3) {
+      await api.post('/game/bets', { list: listBet },
+      {
+        headers: { 
+          "Authorization": `Bearer ${auth.token}`
+        }
+      })
+      .then((response) => {
+        console.log(response)
+      })
+      .catch((error) => {
+        alert('Não foi possível criar a aposta.')
+        console.log(error)
+      })
 
-    //   dispatch({
-    //     type: 'SAVE_BETS',
-    //     payload: listBet
-    //   })
-    //   history.push('/home')
-    // } else {
-    //   alert('Para salvar os jogos o total deve ser de pelo menos R$ 30,00')
-    // }
+      dispatch({
+        type: 'SAVE_BETS',
+        payload: listBet
+      })
+      dispatch({
+        type: 'CART_OFF',
+        payload: false
+      })
+      navigation.navigate('Home')
+    } else {
+      alert('Para salvar os jogos o total deve ser de pelo menos R$ 30,00')
+    }
   }
 
   return (
     <>
       <NewBetContent>
-        <NewBetText>New bet {selectGame.type}</NewBetText>
+        <NewBetText  style={{ marginTop: 16, marginBottom: 16 }}>New bet {selectGame.type}</NewBetText>
         <ChooseGame>Choose a game</ChooseGame>
         <SelectGame selectGame={selectGame} setSelectGame={setSelectGame} />
         {arraySelectedNumbers.length > 0 ? 
@@ -176,17 +183,17 @@ const NewBet = () => {
             <NumbersContainer numbersTop={true} >
               {arraySelectedNumbers.sort((a, b) => a - b).map((item, index) =>
                 <ButtonNumber
-                value={item} 
-                key={item}
-                selected={arraySelectedNumbers.indexOf(item) !== -1 ? true : false}
-                selectGame={selectGame}
-                arraySelectedNumbers={arraySelectedNumbers}
-                setArraySelectedNumbers={setArraySelectedNumbers}
-                numbersTop={true}
+                  value={item} 
+                  key={item}
+                  selected={arraySelectedNumbers.indexOf(item) !== -1 ? true : false}
+                  selectGame={selectGame}
+                  arraySelectedNumbers={arraySelectedNumbers}
+                  setArraySelectedNumbers={setArraySelectedNumbers}
+                  numbersTop={true}
                 />
               )}
             </NumbersContainer>
-          <ActionButtonsMobileContainer>
+          <ActionButtonsMobileContainer style={{ marginTop: 16, marginBottom: 16 }}>
               <ActionButtonsMobile onPress={() => handleCompleteGame()}>
                 <TextActionButton>
               Complete Game
@@ -198,11 +205,11 @@ const NewBet = () => {
                 </TextActionButton>
             </ActionButtonsMobile>
             <CartButton onPress={() => handleAddToCart()}>
-                <Ionicons name="cart-outline" size={24} color="#fff" />
-                <TextCartButton>
-                  Add to cart
-                </TextCartButton>
-              </CartButton>
+              <Ionicons name="cart-outline" size={24} color="#fff" />
+              <TextCartButton>
+                Add to cart
+              </TextCartButton>
+            </CartButton>
           </ActionButtonsMobileContainer>
           </>
           :
@@ -226,7 +233,7 @@ const NewBet = () => {
         </NumbersContainer>
       </NewBetContent>
       <Cart 
-        listBet={listBet}
+        // listBet={listBet}
         onHandleDeleteBet={handleDeleteBet}
         onHandleTotalPrice={handleTotalPrice}
         onHandleSave={handleSave}

@@ -14,7 +14,7 @@ export const CartContainer = styled.View<ICartContainerProps>`
   min-height: calc(100vh - 70px);
   max-height: calc(100vh - 70px);
   padding: 32px 32px 0;
-  position: absolute;
+  position: fixed;
   top: 0;
   right: 0;
 `
@@ -169,11 +169,6 @@ export const ButtonSave = styled.TouchableOpacity`
   border: none;
 
   background-color: transparent;
-  color: #B5C401;
-  font-size: 35px;
-  font-style: italic;
-  font-weight: bold;
-  font-family: sans-serif;
 
   display: flex;
   flex-direction: row;
@@ -181,4 +176,12 @@ export const ButtonSave = styled.TouchableOpacity`
   align-items: center;
 
   padding: 32px;
+`
+
+export const SaveText = styled.Text`
+  color: #B5C401;
+  font-size: 35px;
+  font-style: italic;
+  font-weight: bold;
+  font-family: sans-serif;
 `

@@ -5,29 +5,14 @@ import * as Yup from 'yup'
 import { Platform, KeyboardAvoidingView } from 'react-native'
 import { useDispatch } from 'react-redux'
 
-import styled from 'styled-components/native'
-
 import api from '../../services/api'
 
 import Input from '../Input/index'
 import TitleForm from '../../components/TittleForm'
 import ButtonForm from '../ButtonForm'
 
-const FormContent = styled.View`
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 16px;
-`
 
-const LinkForgetPassword= styled.TouchableOpacity`
-  margin: 8px 20px 8px auto;
-`
-
-const TextForgetPassword = styled.Text`
-  color: #C1C1C1;
-  font-size: 14px;
-  font-style: italic;
-`
+import { FormContent, LinkForgetPassword, TextForgetPassword } from './styles'
 
 const FormComponent = ({ titleForm }: any) => {
   const navigation = useNavigation()
@@ -49,6 +34,7 @@ const FormComponent = ({ titleForm }: any) => {
       abortEarly: false,
     }).then(() => {
       handleRequest(titleForm, user)
+      console.log('validate ok')
     })
     .catch((err) => {
       alert(`${err.errors}`)
@@ -59,14 +45,18 @@ const FormComponent = ({ titleForm }: any) => {
   }
 
   async function handleRequest(request: string, user: { username?: string; email: string; password: string }) {
+    console.log(user)
     switch (request) {
       case "Registration":
         await api.post('/register', user)
-        .then(() => {
+        .then((res) => {
+          console.log(res)
+          console.log('register ok')
           alert('Usuário cadastrado com sucesso!')
           navigation.navigate('Login')
         })
         .catch((error) => {
+          console.log(error)
           alert(error.message)
         })
         break;
@@ -85,6 +75,15 @@ const FormComponent = ({ titleForm }: any) => {
           alert(error.message)
         })
         break;
+      
+      case "Forgot Password":
+        await api.post('/passwords', { email: user.email, password: user.password })
+        .then((response) => console.log(response))
+        .catch((error) => {
+          alert(error.message)
+        })
+        break;
+
       default:
         break;
     }
@@ -105,7 +104,9 @@ const FormComponent = ({ titleForm }: any) => {
             name="email" 
             label="Email" 
           />
-          <Input name="password" label="Password" />
+          {titleForm !== "Forgot Password" &&
+            <Input name="password" label="Password" />
+          }
           {titleForm === "Authentication" &&
             <LinkForgetPassword onPress={() => navigation.navigate("ForgotPassword")} >
               <TextForgetPassword>I forget my password</TextForgetPassword>

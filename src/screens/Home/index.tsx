@@ -1,5 +1,4 @@
 import React from 'react'
-import { useRoute } from '@react-navigation/native'
 import { FlatList } from 'react-native'
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux'
 
@@ -27,18 +26,6 @@ const Home = () => {
 
   const { auth, bets } = useSelector((state: RootStateOrAny) => state)
   const dispatch = useDispatch()
-  const route = useRoute()
-  console.log(route.name)
-  
-  React.useEffect(() => {
-    console.log(route)
-    if (route.name === "Home") {
-      dispatch({
-        type: 'IS_SHOPPING_CART',
-        payload: false
-      })
-    }
-  }, [])
 
   React.useEffect(() => {
     getGame()

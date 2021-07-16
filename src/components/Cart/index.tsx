@@ -2,7 +2,6 @@ import React from 'react'
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import convertToCurrency from '../../utils/convertToCurrency'
 
-
 import { AntDesign, Ionicons, FontAwesome5, Feather } from '@expo/vector-icons'
 
 import { 
@@ -23,7 +22,8 @@ import {
   TotalText,
   TextItalic,
   Save,
-  ButtonSave
+  ButtonSave,
+  SaveText
 } from './styles'
 
 interface IListBetProps {
@@ -35,19 +35,19 @@ interface IListBetProps {
 }
 
 interface ICartProps {
-  listBet: Array<IListBetProps>
+  // listBet: Array<IListBetProps>
   onHandleDeleteBet(indexArray: number): void
   onHandleTotalPrice(): number
   onHandleSave(): void
 }
 
 const Cart = ({ 
-  listBet, 
+  // listBet, 
   onHandleDeleteBet, 
   onHandleTotalPrice, 
   onHandleSave 
 }: ICartProps) => {
-  const { cart, bets } = useSelector((state: RootStateOrAny) => state)
+  const { cart, betsOnCart } = useSelector((state: RootStateOrAny) => state)
   const dispatch = useDispatch()
   
   function handleCloseCart() {
@@ -67,7 +67,7 @@ const Cart = ({
         <Ionicons name="close" size={32} color="#B5C401" />
       </BtnClose>
       <Bets data-js="bets">
-        {bets.map((item: { key: string | number | null | undefined; color: any; numbers: any; type: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; date: any; price: number; }, index: number) => 
+        {betsOnCart.map((item: { key: string | number | null | undefined; color: any; numbers: any; type: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; date: any; price: number; }, index: number) => 
           <Bet data-js="bet" key={item.key} style={{ marginTop: 12, marginBottom: 12 }}>
             <Separator style={{ backgroundColor: item.color }}></Separator>
             <BetInfo style={{ marginLeft: 16 }}>
@@ -90,7 +90,7 @@ const Cart = ({
         </TotalText>
       <Save style={{ borderRadius: 8 }}>
         <ButtonSave onPress={() => onHandleSave()}>
-          Save 
+          <SaveText>Save</SaveText>
           <Feather name="arrow-right" style={{  marginLeft: 16 }}  size={28}  color="#B5C401" />
         </ButtonSave>
         
