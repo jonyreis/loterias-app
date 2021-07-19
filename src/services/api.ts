@@ -1,5 +1,5 @@
-import axios from "axios";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import axios from "axios"
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const getData = async () => {
   try {
@@ -15,21 +15,21 @@ const getData = async () => {
 }
 
 
-
-const instance = axios.create({ 
-  baseURL: 'http://10.0.2.2:3333'
+const instance = axios.create({
+  baseURL: "http://10.0.2.2:3333"
   // baseURL: 'http://192.168.0.164:3333'
 });
 
-instance.interceptors.request.use((config) => {
-  const accessToken = getData()
-  if (accessToken) {
+instance.interceptors.request.use(async function (config) {
+  const accessToken = await getData()
+
+  if (accessToken !== '') {
     config.headers.Authorization = `Bearer ${accessToken}`;
   }
-
+  
   return config;
+}, function (error) {
+  return Promise.reject(error);
 });
 
-instance.interceptors.response.use(({ data }) => data);
-
-export default instance;
+export default instance

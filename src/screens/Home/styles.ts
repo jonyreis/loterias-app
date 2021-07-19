@@ -26,7 +26,7 @@ export const Bets = styled.SafeAreaView`
   display: flex;
   flex-direction: column;
   height: 100%;
-  padding: 32px 0 230px;
+  padding: 32px 0 260px;
 `
 
 export const Bet = styled.View`

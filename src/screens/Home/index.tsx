@@ -24,7 +24,7 @@ const Home = () => {
   const [selectedFilter, setSelectedFilter] = React.useState<Array<string>>([])
   const [listWithFilter, setListWithFilter] = React.useState<Array<any>>([])
 
-  const { auth, bets } = useSelector((state: RootStateOrAny) => state)
+  const { bets } = useSelector((state: RootStateOrAny) => state)
   const dispatch = useDispatch()
 
   React.useEffect(() => {
@@ -45,10 +45,9 @@ const Home = () => {
 
   async function getGame() {
     const games = await api.get('/games')
-
-    const betsApi = await api.get('/game/bets')
-
-    const listGame = games.data.map((item: {
+    const betsApi = await api.get('game/bets')
+    
+    const listButtonGame = games.data.map((item: {
       id: number;
       color: string; 
       type: string; 
@@ -72,7 +71,7 @@ const Home = () => {
 
     dispatch({
       type: 'ADD_GAMES',
-      payload: listGame
+      payload: listButtonGame
     })
 
     dispatch({
@@ -89,7 +88,7 @@ const Home = () => {
       <Filters>Filters</Filters>
       <GamesBtn selectedFilter={selectedFilter} setSelectedFilter={setSelectedFilter} />
       <Bets>
-        <FlatList 
+        <FlatList
           data={listWithFilter} 
           keyExtractor={item => item.id} 
           renderItem={({ item }) => {

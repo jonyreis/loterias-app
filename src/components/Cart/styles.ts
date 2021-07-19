@@ -5,8 +5,7 @@ export const CartContainer = styled.View`
   background-color: #fff;
   border: 1px solid #e2e2e2;
 
-  min-width: 300px;
-  max-width: 320px;
+  width: 320px;
   min-height: 520px;
   max-height: 700px;
   height: 560px;
@@ -144,8 +143,7 @@ export const Save = styled.View`
   justify-content: center;
   align-items: center;
 
-  min-width: 320px;
-  width: 100%;
+  width: 320px;
   height: 100px;
   position: absolute;
   bottom: 0;

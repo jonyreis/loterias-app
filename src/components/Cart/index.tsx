@@ -1,10 +1,11 @@
 import React from 'react'
+import { ScrollView } from 'react-native'
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import convertToCurrency from '../../utils/convertToCurrency'
-
+import {numberWithCommas} from '../../utils/format'
 import { AntDesign, Ionicons, FontAwesome5, Feather } from '@expo/vector-icons'
 import Separator from '../Separator'
-import { 
+import {
   CartContainer,
   CartText,
   TextH3,
@@ -31,17 +32,18 @@ interface IListBetProps {
   color: string
   price: number
   key: string
+  date: any
 }
 
 interface ICartProps {
-  // listBet: Array<IListBetProps>
+  listBet: Array<IListBetProps>
   onHandleDeleteBet(indexArray: number): void
   onHandleTotalPrice(): number
   onHandleSave(): void
 }
 
-const Cart = ({ 
-  // listBet, 
+const Cart = ({
+  listBet, 
   onHandleDeleteBet, 
   onHandleTotalPrice, 
   onHandleSave 
@@ -66,27 +68,29 @@ const Cart = ({
       <BtnClose onPress={() => handleCloseCart()}>
         <Ionicons name="close" size={32} color="#B5C401" />
       </BtnClose>
-      <Bets data-js="bets">
-        {betsOnCart.map((item: { key: string | number | null | undefined; color: any; numbers: any; type: boolean | React.ReactChild | React.ReactFragment | React.ReactPortal | null | undefined; date: any; price: number; }, index: number) => 
-          <Bet data-js="bet" key={item.key} style={{ marginTop: 12, marginBottom: 12 }}>
-            <Separator color={item.color} />
-            <BetInfo style={{ marginLeft: 16 }}>
-              <ArrayNumbers style={{ marginTop: 0, marginBottom: 8 }}>
-                <Numbers>{String(item.numbers)}</Numbers>
-              </ArrayNumbers>
-              <DateAndPrice>
-                <DatePrice>{item.date} {convertToCurrency(item.price || 0)} </DatePrice>
-                <ButtonnRemoveBet onPress={() => onHandleDeleteBet(index)}>
-                  <FontAwesome5 name="trash-alt" size={18} color="#707070" />
-                </ButtonnRemoveBet>
-              </DateAndPrice>
-              <Type style={{ color: item.color }} >{item.type}</Type>
-            </BetInfo>
-          </Bet>
-        )}
+      <Bets>
+        <ScrollView contentContainerStyle={{ paddingBottom: 40 }}>
+          {listBet.map((item: IListBetProps, index: number) => 
+            <Bet key={item.key} style={{ marginTop: 12, marginBottom: 12 }}>
+              <Separator color={item.color} />
+              <BetInfo style={{ marginLeft: 16 }}>
+                <ArrayNumbers style={{ marginTop: 0, marginBottom: 8 }}>
+                  <Numbers>{String(item.numbers)}</Numbers>
+                </ArrayNumbers>
+                <DateAndPrice>
+                  <DatePrice>{item.date} {convertToCurrency(item.price || 0)} </DatePrice>
+                  <ButtonnRemoveBet onPress={() => onHandleDeleteBet(index)}>
+                    <FontAwesome5 name="trash-alt" size={18} color="#707070" />
+                  </ButtonnRemoveBet>
+                </DateAndPrice>
+                <Type style={{ color: item.color }} >{item.type}</Type>
+              </BetInfo>
+            </Bet>
+          )}
+        </ScrollView>
       </Bets>
       <TotalText>
-        <TextItalic>Cart</TextItalic> Total: {convertToCurrency(onHandleTotalPrice() || 0)}
+        <TextItalic>Cart</TextItalic> Total: R$ {onHandleTotalPrice().toFixed(2)}
       </TotalText>
       <Save>
         <ButtonSave onPress={() => onHandleSave()}>

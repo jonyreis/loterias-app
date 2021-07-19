@@ -1,6 +1,6 @@
 import React from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import { Form } from '@unform/mobile'
 import * as Yup from 'yup'
 import { Platform, KeyboardAvoidingView } from 'react-native'
@@ -51,8 +51,6 @@ const FormComponent = ({ titleForm }: any) => {
       case "Registration":
         await api.post('/register', user)
         .then((res) => {
-          console.log(res)
-          console.log('register ok')
           alert('Usuário cadastrado com sucesso!')
           navigation.navigate('Login')
         })
@@ -65,15 +63,13 @@ const FormComponent = ({ titleForm }: any) => {
       case "Authentication":
         try {
           const response = await api.post('/sessions', { email: user.email, password: user.password })
-            if (response.status === 200) {
-              dispatch({
-                type: 'USER_AUTH',
-                payload: response.data
-              })
-              const jsonValue = JSON.stringify(response.data)
-              await AsyncStorage.setItem('@auth', jsonValue)
-            }
+          dispatch({
+            type: 'USER_AUTH',
+            payload: response.data
+          })
+          storeData(response.data.token)
         } catch (error) {
+          console.log(error)
           alert(error.message)
         }
         break;
@@ -88,6 +84,14 @@ const FormComponent = ({ titleForm }: any) => {
 
       default:
         break;
+    }
+  }
+
+  const storeData = async (value: string) => {
+    try {
+      await AsyncStorage.setItem('@auth', value)
+    } catch (e) {
+      // saving error
     }
   }
 
