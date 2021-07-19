@@ -2,7 +2,7 @@ import React from 'react'
 import { ScrollView } from 'react-native'
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
 import convertToCurrency from '../../utils/convertToCurrency'
-import {numberWithCommas} from '../../utils/format'
+
 import { AntDesign, Ionicons, FontAwesome5, Feather } from '@expo/vector-icons'
 import Separator from '../Separator'
 import {

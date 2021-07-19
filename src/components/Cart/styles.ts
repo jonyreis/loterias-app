@@ -6,9 +6,9 @@ export const CartContainer = styled.View`
   border: 1px solid #e2e2e2;
 
   width: 320px;
-  min-height: 520px;
+  min-height: 440px;
   max-height: 700px;
-  height: 560px;
+  height: 470px;
   padding: 32px 32px 0;
   position: absolute;
   top: 0;

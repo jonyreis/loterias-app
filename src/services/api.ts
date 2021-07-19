@@ -16,8 +16,8 @@ const getData = async () => {
 
 
 const instance = axios.create({
-  baseURL: "http://10.0.2.2:3333"
-  // baseURL: 'http://192.168.0.164:3333'
+  // baseURL: "http://10.0.2.2:3333"
+  baseURL: 'http://192.168.0.164:3333'
 });
 
 instance.interceptors.request.use(async function (config) {

@@ -1,9 +1,11 @@
 import React from 'react'
-import { Text, ScrollView } from 'react-native'
+import { ScrollView } from 'react-native'
 import { useDispatch, useSelector, RootStateOrAny } from 'react-redux'
 import { Ionicons } from '@expo/vector-icons';
 
 import { getDate } from '../../utils/getDate'
+import useGame from '../../hooks/useGame'
+
 import api from '../../services/api'
 
 
@@ -50,33 +52,21 @@ const NewBet = ({ navigation }: any) => {
     range: 0
   })
 
-  const { auth, cart } = useSelector((state: RootStateOrAny) => state)
+  const { cart } = useSelector((state: RootStateOrAny) => state)
   const dispatch = useDispatch()
+  const { getGame } = useGame()
 
   React.useEffect(() => {
     setArraySelectedNumbers([])
   }, [selectGame])
 
-  React.useEffect(() => {
-    dispatch({
-      type: 'ADD_BET_TO_CART',
-      payload: listBet
-    })
-  }, [listBet])
-
   // React.useEffect(() => {
-  //   if (arraySelectedNumbers.length > 0) {
-  //     dispatch({
-  //       type: 'IS_SHOPPING_CART',
-  //       payload: true
-  //     })
-  //   } else if (arraySelectedNumbers.length === 0) {
-  //     dispatch({
-  //       type: 'IS_SHOPPING_CART',
-  //       payload: false
-  //     })
-  //   }
-  // }, [arraySelectedNumbers])
+  //   dispatch({
+  //     type: 'ADD_BET_TO_CART',
+  //     payload: listBet
+  //   })
+  // }, [listBet])
+
 
   function handleCompleteGame() {
     if (arraySelectedNumbers.length >= selectGame.maxNumber) {
@@ -145,29 +135,26 @@ const NewBet = ({ navigation }: any) => {
 
   async function handleSave() {
     if (handleTotalPrice() >= 3) {
-      await api.post('/game/bets', { list: listBet },
-      {
-        headers: {
-          "Authorization": `Bearer ${auth.token}`
+      try {
+        const response = await api.post('/game/bets', { list: listBet })
+        if (response.status === 200) {
+          dispatch({
+            type: 'CART_OFF',
+            payload: false
+          })
+          setTimeout(() => {
+            getGame()
+          }, 3000);
         }
-      })
-      .then((response) => {
-        console.log(response)
-        // dispatch({
-        //   type: 'SAVE_BETS',
-        //   payload: listBet
-        // })
+      } catch (error) {
+        alert('Não foi possível criar a aposta.')
+
         dispatch({
           type: 'CART_OFF',
           payload: false
         })
-      })
-      .catch((error) => {
-        alert('Não foi possível criar a aposta.')
-        console.log(error)
-      })
-
-      navigation.navigate('Home')
+      }
+      setListBet([])
     } else {
       alert('Para salvar os jogos o total deve ser de pelo menos R$ 30,00')
     }
@@ -235,7 +222,7 @@ const NewBet = ({ navigation }: any) => {
       </NewBetContent>
       {cart ?
         <Cart 
-          // listBet={listBet}
+          listBet={listBet}
           onHandleDeleteBet={handleDeleteBet}
           onHandleTotalPrice={handleTotalPrice}
           onHandleSave={handleSave}

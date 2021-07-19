@@ -42,8 +42,8 @@ const AuthRoutes = () => {
           options={{
             tabBarIcon: ((props) => <Feather name="home" size={props.size} color={props.color} />)
           }}
-          name="Home" 
-          component={Home} 
+          name="Home"
+          component={Home}
         />
         <Tab.Screen 
           options={{
