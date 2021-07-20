@@ -5,12 +5,12 @@ import MyCheckbox from './MyCheckbox'
 
 import { CheckboxContent } from './styles'
 interface IGamesBtnProps {
-  selectedFilter: Array<string>
-  setSelectedFilter: React.Dispatch<React.SetStateAction<Array<string>>>
+  betFilter: Array<string>
+  setBetFilter: React.Dispatch<React.SetStateAction<Array<string>>>
 }
 
 
-const GamesBtn = ({ selectedFilter, setSelectedFilter }: IGamesBtnProps ) => {
+const GamesBtn = ({ betFilter, setBetFilter }: IGamesBtnProps ) => {
   const { games } = useSelector((state: RootStateOrAny) => state)
 
   return (
@@ -29,8 +29,8 @@ const GamesBtn = ({ selectedFilter, setSelectedFilter }: IGamesBtnProps ) => {
           key={item.id}
           title={item.type}  
           color={item.color}
-          selectedFilter={selectedFilter}
-          setSelectedFilter={setSelectedFilter}
+          betFilter={betFilter}
+          setBetFilter={setBetFilter}
         />
       )}
     </CheckboxContent>

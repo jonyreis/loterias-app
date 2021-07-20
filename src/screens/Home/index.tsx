@@ -20,7 +20,7 @@ import {
 } from './styles'
 
 const Home = () => {
-  const [selectedFilter, setSelectedFilter] = React.useState<Array<string>>([])
+  const [betFilter, setBetFilter] = React.useState<Array<string>>([])
   const [listWithFilter, setListWithFilter] = React.useState<Array<any>>([])
 
   const { bets } = useSelector((state: RootStateOrAny) => state)
@@ -32,22 +32,22 @@ const Home = () => {
   }, [])
 
   React.useEffect(() => {
-    if (selectedFilter.length <= 0 ) return setListWithFilter(bets)
+    if (betFilter.length < 1 ) return setListWithFilter(bets)
     
     const filteredList = bets.filter((bet: { game: { type: string; } }) => {
-      if (bet.game.type === selectedFilter[0] || bet.game.type === selectedFilter[1] || bet.game.type === selectedFilter[2]) {
-        return bet
-      } 
+      for (let i = 0; i < betFilter.length; i++) {
+        if (bet.game.type === betFilter[i]) return bet
+      }
     })
 
     setListWithFilter(filteredList)
-  }, [selectedFilter, bets])
+  }, [betFilter, bets])
 
   return (
     <HomeContent>
       <RecentGame>Recent Game</RecentGame>
       <Filters>Filters</Filters>
-      <GamesBtn selectedFilter={selectedFilter} setSelectedFilter={setSelectedFilter} />
+      <GamesBtn betFilter={betFilter} setBetFilter={setBetFilter} />
       <Bets>
         <FlatList
           data={listWithFilter} 

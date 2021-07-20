@@ -160,7 +160,7 @@ const NewBet = () => {
         {arraySelectedNumbers.length > 0 ? 
           <>
             <NumbersContainer numbersTop={true}>
-              {arraySelectedNumbers.sort((a, b) => a - b).map((item, index) =>
+              {arraySelectedNumbers.sort((a, b) => a - b).map((item) =>
                 <ButtonNumber
                   value={item} 
                   key={item}

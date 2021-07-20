@@ -27,19 +27,12 @@ const ButtonNumberSelected = ({
   arraySelectedNumbers, 
   setArraySelectedNumbers
 }: IButtonNumberProps) => {
-  const [buttonSelect, setButtonSelect] = React.useState(false)
-
-  // React.useEffect(() => {
-
-  // }, [arraySelectedNumbers])
-
 
   function handleSelectNumber(btnNumber: any) {
     const num = Number(btnNumber.currentTarget.textContent)
 
     if (arraySelectedNumbers.indexOf(num) === -1 && arraySelectedNumbers.length < selectGame.maxNumber) {
       setArraySelectedNumbers((prevState: any) => [...prevState, num])
-      setButtonSelect(true)
     } else if (arraySelectedNumbers.indexOf(num) !== -1) {
       let newArray = arraySelectedNumbers
 
@@ -47,7 +40,6 @@ const ButtonNumberSelected = ({
       newArray.splice(indexSelect, 1)
       
       setArraySelectedNumbers([...newArray])
-      setButtonSelect(false)
     } else {
       alert(`A ${selectGame.type} pode ter até ${selectGame.maxNumber} números selecionados`)
     }

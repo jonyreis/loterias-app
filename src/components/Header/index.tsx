@@ -8,7 +8,7 @@ import { AntDesign, Feather } from '@expo/vector-icons'
 import { HeaderContent, ButtonLogo, TGL, LineTitle, ShoppingCartAndLogout } from './styles'
 
 const Header = () => {
-  const { shoppingCart, cart } = useSelector((state: RootStateOrAny) => state)
+  const { cart } = useSelector((state: RootStateOrAny) => state)
   const dispatch = useDispatch()
   
   function handleCart() {
@@ -43,11 +43,9 @@ const Header = () => {
         <LineTitle></LineTitle>
       </ButtonLogo>
       <ShoppingCartAndLogout shoppingCart={true}>
-        {/* {shoppingCart && */}
-          <TouchableOpacity onPress={() => handleCart()}>
-            <AntDesign name="shoppingcart" size={32} color="#B5C401" />
-          </TouchableOpacity>
-        {/* } */}
+        <TouchableOpacity onPress={() => handleCart()}>
+          <AntDesign name="shoppingcart" size={32} color="#B5C401" />
+        </TouchableOpacity>
         <TouchableOpacity onPress={() => handleLogout()}>
           <Feather name="log-out" size={28} color="#C1C1C1" />
         </TouchableOpacity>

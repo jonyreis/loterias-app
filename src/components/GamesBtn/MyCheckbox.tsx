@@ -4,24 +4,24 @@ import { Pressable, Text } from './styles'
 interface IMyCheckbox {
   title: string
   color: string
-  selectedFilter: Array<string>
-  setSelectedFilter: React.Dispatch<React.SetStateAction<Array<string>>>
+  betFilter: Array<string>
+  setBetFilter: React.Dispatch<React.SetStateAction<Array<string>>>
 }
 
-const MyCheckbox = ({ title, color, selectedFilter, setSelectedFilter }: IMyCheckbox) => {
+const MyCheckbox = ({ title, color, betFilter, setBetFilter }: IMyCheckbox) => {
   const [checked, setChecked] = React.useState<boolean>(false)
 
   React.useEffect(() => {
     if (checked) {
-      let newArraySelected = selectedFilter
+      let newArraySelected = betFilter
       newArraySelected.push(title)
-      setSelectedFilter([...newArraySelected])
+      setBetFilter([...newArraySelected])
     } else {
-      let newArraySelected = selectedFilter
+      let newArraySelected = betFilter
       let indexRemove = newArraySelected.indexOf(title)
       newArraySelected.splice(indexRemove, 1)
 
-      setSelectedFilter([...newArraySelected])
+      setBetFilter([...newArraySelected])
     }
   }, [checked])
 

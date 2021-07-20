@@ -99,7 +99,7 @@ const FormComponent = ({ titleForm }: any) => {
     try {
       await AsyncStorage.setItem('@auth', value)
     } catch (e) {
-      // saving error
+      console.log(e)
     }
   }
 

@@ -5,18 +5,16 @@ const getData = async () => {
   try {
     const value = await AsyncStorage.getItem('@auth')
     if(value !== null) {
-      // value previously stored
       return value
     }
   } catch(e) {
-    // error reading value
+    console.log(e)
     return
   }
 }
 
 
 const instance = axios.create({
-  // baseURL: "http://10.0.2.2:3333"
   baseURL: 'http://192.168.0.164:3333'
 });
 
