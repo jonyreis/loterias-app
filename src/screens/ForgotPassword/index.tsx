@@ -1,38 +1,13 @@
 import React from 'react'
 import { View } from 'react-native'
-import styled from 'styled-components/native'
 
 import Form from '../../components/Form'
 import ButtonRedirect from '../../components/ButtonRedirect'
-
-import api from '../../services/api';
 
 import { Container, LogoTGL, Title, LineTitle, Footer } from './styles'
 
 
 const ForgotPassword = ({ navigation }: any) => {
-  async function handleForgotPassword(event: { preventDefault?: any; target: any; }) {
-    event.preventDefault()
-
-    const resetPassword = {
-      email: event.target[0].value,
-      redirect_url: 'http://localhost:3000/reset-password'
-    }
-
-    await api.post('/passwords', resetPassword)
-      .then((response) => {
-        if (response.status === 204) {
-          alert('Enviamos um email para você!')
-        }
-      })
-      .catch((error) => {
-        console.log(error)
-        alert('E-mail não cadastrado!')
-      })
-
-    event.target[0].value = ''
-  }
-
   return (
     <Container>
     <LogoTGL >

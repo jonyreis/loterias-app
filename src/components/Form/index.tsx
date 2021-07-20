@@ -75,11 +75,19 @@ const FormComponent = ({ titleForm }: any) => {
         break;
       
       case "Forgot Password":
-        await api.post('/passwords', { email: user.email, password: user.password })
-        .then((response) => console.log(response))
-        .catch((error) => {
-          alert(error.message)
-        })
+        const resetPassword = {
+          email: user.email,
+          redirect_url: 'http://localhost:3000/reset-password'
+        }
+        try {
+          const response = await api.post('/passwords', resetPassword)
+          if (response.status === 204) {
+            alert('Enviamos um email de recuperação de senha para ' + user.email)
+          }
+        } catch (error) {
+          console.log(error)
+          alert('E-mail não cadastrado!')
+        }
         break;
 
       default:
@@ -120,7 +128,7 @@ const FormComponent = ({ titleForm }: any) => {
           }
           {titleForm === "Authentication" && <ButtonForm navigation={navigation} to="Login" nameButton="Login" formRef={formRef}/>}
           {titleForm === "Registration" && <ButtonForm navigation={navigation} to="Login" nameButton="Register" formRef={formRef}/>}
-          {titleForm === "Forgot Password" && <ButtonForm navigation={navigation} to="Login" nameButton="Send"/>}
+          {titleForm === "Forgot Password" && <ButtonForm navigation={navigation} to="Login" nameButton="Send" formRef={formRef}/>}
         </Form>
       </FormContent>
     </KeyboardAvoidingView>
