@@ -37,6 +37,7 @@ const SelectGame = ({ selectGame, setSelectGame }: ISelectGameProps) => {
       }) =>
         <Pressable
           onPress={() => setSelectGame(item)}
+          key={item.id}
           style={{ 
             backgroundColor: item.type === selectGame.type ? item.color : '#fff',
             borderWidth: 2,

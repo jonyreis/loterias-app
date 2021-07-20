@@ -8,7 +8,7 @@ export const CartContainer = styled.View`
   width: 320px;
   min-height: 440px;
   max-height: 700px;
-  height: 470px;
+  height: 560px;
   padding: 32px 32px 0;
   position: absolute;
   top: 0;
@@ -45,6 +45,7 @@ export const Bets = styled.View`
 export const Bet = styled.View`
   flex-direction: row;
   align-items: center;
+  margin: 12px 0;
 `
 
 export const BetInfo = styled.View`
@@ -60,6 +61,7 @@ export const ArrayNumbers = styled.View`
   flex-wrap: wrap;
 
   max-width: 100%;
+  margin-bottom: 4px;
 `
 
 export const Numbers = styled.Text`

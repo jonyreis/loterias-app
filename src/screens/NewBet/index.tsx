@@ -38,7 +38,7 @@ interface IGameProps {
 }
 
 
-const NewBet = ({ navigation }: any) => {
+const NewBet = () => {
   const [listBet, setListBet] = React.useState<Array<any>>([])
   const [arraySelectedNumbers, setArraySelectedNumbers] = React.useState<Array<number>>([])
   const [selectGame, setSelectGame] = React.useState<IGameProps>({
@@ -59,14 +59,6 @@ const NewBet = ({ navigation }: any) => {
   React.useEffect(() => {
     setArraySelectedNumbers([])
   }, [selectGame])
-
-  // React.useEffect(() => {
-  //   dispatch({
-  //     type: 'ADD_BET_TO_CART',
-  //     payload: listBet
-  //   })
-  // }, [listBet])
-
 
   function handleCompleteGame() {
     if (arraySelectedNumbers.length >= selectGame.maxNumber) {
@@ -142,9 +134,8 @@ const NewBet = ({ navigation }: any) => {
             type: 'CART_OFF',
             payload: false
           })
-          setTimeout(() => {
-            getGame()
-          }, 3000);
+          getGame()
+          alert('Aposta criada com sucesso!')
         }
       } catch (error) {
         alert('Não foi possível criar a aposta.')

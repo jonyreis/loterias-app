@@ -1,7 +1,6 @@
 import React from 'react'
 import { ScrollView } from 'react-native'
-import { useDispatch, useSelector, RootStateOrAny } from 'react-redux';
-import convertToCurrency from '../../utils/convertToCurrency'
+import { useDispatch } from 'react-redux';
 
 import { AntDesign, Ionicons, FontAwesome5, Feather } from '@expo/vector-icons'
 import Separator from '../Separator'
@@ -48,7 +47,6 @@ const Cart = ({
   onHandleTotalPrice, 
   onHandleSave 
 }: ICartProps) => {
-  const { betsOnCart } = useSelector((state: RootStateOrAny) => state)
   
   const dispatch = useDispatch()
   
@@ -71,14 +69,14 @@ const Cart = ({
       <Bets>
         <ScrollView contentContainerStyle={{ paddingBottom: 40 }}>
           {listBet.map((item: IListBetProps, index: number) => 
-            <Bet key={item.key} style={{ marginTop: 12, marginBottom: 12 }}>
+            <Bet key={item.key}>
               <Separator color={item.color} />
               <BetInfo style={{ marginLeft: 16 }}>
-                <ArrayNumbers style={{ marginTop: 0, marginBottom: 8 }}>
+                <ArrayNumbers>
                   <Numbers>{String(item.numbers)}</Numbers>
                 </ArrayNumbers>
                 <DateAndPrice>
-                  <DatePrice>{item.date} {convertToCurrency(item.price || 0)} </DatePrice>
+                  <DatePrice>{item.date}  R$ {item.price.toFixed(2)} </DatePrice>
                   <ButtonnRemoveBet onPress={() => onHandleDeleteBet(index)}>
                     <FontAwesome5 name="trash-alt" size={18} color="#707070" />
                   </ButtonnRemoveBet>
